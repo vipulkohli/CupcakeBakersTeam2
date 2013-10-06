@@ -10,17 +10,18 @@ USE `customcupcakes` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `customcupcakes`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
   `first_name` VARCHAR(45) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `salt` VARCHAR(45) NOT NULL,
-  `telephone` VARCHAR(45) NOT NULL,
-  `address` VARCHAR(45) NOT NULL,
+  `salt` VARCHAR(30) NOT NULL,
+  `telephone` VARCHAR(15) NOT NULL,
+  `address` VARCHAR(100) NOT NULL,
   `city` VARCHAR(45) NOT NULL,
-  `state` VARCHAR(45) NOT NULL,
-  `zip_code` VARCHAR(45) NOT NULL,
+  `state` VARCHAR(2) NOT NULL,
+  `zip_code` VARCHAR(10) NOT NULL,
   `date_created` DATETIME NOT NULL,
+  `is_on_mailing_list` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
@@ -92,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `customcupcakes`.`cupcakes` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `icing_id` INT NOT NULL,
   `flavor_id` INT NOT NULL,
-  `order_id` INT NOT NULL,
+  `order_id` INT NULL,
   `filling_id` INT NOT NULL DEFAULT -1,
   `quantity` INT NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
@@ -140,10 +141,13 @@ ENGINE = InnoDB;
 -- Table `customcupcakes`.`cupcake_toppings`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `customcupcakes`.`cupcake_toppings` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `cupcake_id` INT NOT NULL,
   `topping_id` INT NOT NULL,
-  PRIMARY KEY (`cupcake_id`, `topping_id`),
+  PRIMARY KEY (`id`),
   INDEX `fk_cupcake_toppings_2_idx` (`topping_id` ASC),
+  INDEX `index3` (`cupcake_id` ASC),
+  UNIQUE INDEX `cupcake_id_UNIQUE` (`cupcake_id` ASC, `topping_id` ASC),
   CONSTRAINT `fk_cupcake_toppings_1`
     FOREIGN KEY (`cupcake_id`)
     REFERENCES `customcupcakes`.`cupcakes` (`id`)
@@ -164,6 +168,7 @@ CREATE TABLE IF NOT EXISTS `customcupcakes`.`favorites` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `cupcake_id` INT NOT NULL,
+  `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_favorites_1_idx` (`cupcake_id` ASC),
   INDEX `fk_favorites_2_idx` (`user_id` ASC),
