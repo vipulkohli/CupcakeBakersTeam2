@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `customcupcakes`.`users` (
   `city` VARCHAR(45) NOT NULL,
   `state` VARCHAR(45) NOT NULL,
   `zip_code` VARCHAR(45) NOT NULL,
-  `is_employee` TINYINT NOT NULL DEFAULT 0,
   `date_created` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
