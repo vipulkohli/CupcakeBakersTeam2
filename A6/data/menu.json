@@ -1,0 +1,215 @@
+{
+  "menu": {
+    "cakes": [
+      {
+        "flavor": "Banana",
+        "img_url": "banana.PNG"
+      },
+      {
+        "flavor": "Carrot",
+        "img_url": "carrot.PNG"
+      },
+      {
+        "flavor": "Chocolate",
+        "img_url": "chocolate.PNG"
+      },
+      {
+        "flavor": "Coconut",
+        "img_url": "coconut.PNG"
+      },
+      {
+        "flavor": "Cranberry",
+        "img_url": "cranberry.PNG"
+      },
+      {
+        "flavor": "Dark Chocolate",
+        "img_url": "dark_chocolate.PNG"
+      },
+      {
+        "flavor": "Grape",
+        "img_url": "grape.PNG"
+      },
+      {
+        "flavor": "Kiwi",
+        "img_url": "kiwi.PNG"
+      },
+      {
+        "flavor": "Lemon",
+        "img_url": "lemon.PNG"
+      },
+      {
+        "flavor": "Milk Chocolate",
+        "img_url": "milk_chocolate.PNG"
+      },
+      {
+        "flavor": "Orange Peel",
+        "img_url": "orange.PNG"
+      },
+      {
+        "flavor": "Pineapple",
+        "img_url": "pineapple.PNG"
+      },
+      {
+        "flavor": "Red Velvet",
+        "img_url": "redvelvet.PNG"
+      },
+      {
+        "flavor": "Vanilla",
+        "img_url": "vanilla.PNG"
+      }
+    ],
+    "frosting": [
+      {
+        "flavor": "Vanilla",
+        "img_url": "vanilla_frosting.png"
+      },
+      {
+        "flavor": "Chocolate",
+        "img_url": "chocolate_frosting.png"
+      },
+      {
+        "flavor": "Creme Cheese",
+        "img_url": "creme_cheese_frosting.png"
+      },
+      {
+        "flavor": "Lemon`",
+        "img_url": "lemon_frosting.png"
+      },
+      {
+        "flavor": "Honey & Rosemary",
+        "img_url": "honey_rosemary_frosting.png"
+      },
+      {
+        "flavor": "Vegan Vanilla",
+        "img_url": "vegan_vanilla_frosting.png"
+      },
+      {
+        "flavor": "Salted Caramel",
+        "img_url": "salted_caramel_frosting.png"
+      },
+      {
+        "flavor": "Vanilla Rose",
+        "img_url": "vanilla_rose_frosting.png"
+      },
+      {
+        "flavor": "Buttered Popcorn",
+        "img_url": "buttered_popcorn_frosting.png"
+      },
+      {
+        "flavor": "Cinnamon Toast",
+        "img_url": "cinnamon_toast_frosting.png"
+      },
+      {
+        "flavor": "Lavender Caramel",
+        "img_url": "lavender_caramel_frosting.png"
+      },
+      {
+        "flavor": "Cookie Dough",
+        "img_url": "cookie_dough_frosting.png"
+      },
+      {
+        "flavor": "Raspberry Ripple",
+        "img_url": "raspberry_ripple_frosting.png"
+      },
+      {
+        "flavor": "Raspberry White Chocolate",
+        "img_url": "raspberry_ripple_frosting.png"
+      },
+      {
+        "flavor": "Caramel Mudslide",
+        "img_url": "caramel_mudslide_frosting.png"
+      },
+      {
+        "flavor": "Earl Grey",
+        "img_url": "earl_grey_frosting.png"
+      },
+      {
+        "flavor": "Lemon Poppyseed",
+        "img_url": "lemon_poppyseed_frosting.png"
+      },
+      {
+        "flavor": "Chocolate Orange",
+        "img_url": "chocolate_orange_frosting.png"
+      },
+      {
+        "flavor": "Strawberry Cremem",
+        "img_url": "strawberries_creame_frosting.png"
+      },
+      {
+        "flavor": "Toffe Apple",
+        "img_url": "toffee_apple_frosting.png"
+      },
+      {
+        "flavor": "Chocolate Hazlenut",
+        "img_url": "chocolate_hazelnut_frosting.png"
+      },
+      {
+        "flavor": "Chai Latte",
+        "img_url": "chai_latte_frosting.png"
+      },
+      {
+        "flavor": "Banana Pie",
+        "img_url": "banana_pie_frosting.png"
+      },
+      {
+        "flavor": "Blueberry Cheesecake",
+        "img_url": "blueberry_cheesecake_frosting.png"
+      }
+    ],
+    "fillings": [
+      {
+        "flavor": "No Filling",
+        "rgb": "#ffffff"
+      },
+      {
+        "flavor": "Blueberry",
+        "rgb": "#8599ce"
+      },
+      {
+        "flavor": "Blackberry",
+        "rgb": "#56107b"
+      },
+      {
+        "flavor": "Lemon Meringue",
+        "rgb": "#f8ef6e"
+      },
+      {
+        "flavor": "Strawbery",
+        "rgb": "#ec2c3a"
+      },
+      {
+        "flavor": "Plum",
+        "rgb": "#ce87a9"
+      },
+      {
+        "flavor": "Pomegranite",
+        "rgb": "#ec7696"
+      },
+      {
+        "flavor": "Chocolate Ganache",
+        "rgb": "#694628"
+      },
+      {
+        "flavor": "Vanilla",
+        "rgb": "#f8f8f8"
+      }
+    ],
+    "Toppings": [
+      "Sprinkles",
+      "Mini Chocolate Chips",
+      "Mini Marshmellows",
+      "Bacon",
+      "Oreo Bits",
+      "Twix Bits",
+      "M&M's",
+      "Reese's Pieces",
+      "Butterfinger Bits",
+      "Snicker Bits",
+      "Skittles",
+      "Craisins",
+      "Maraschino Cherries",
+      "Gummy Bears",
+      "Pop Rocks"
+    ]
+  }
+}
