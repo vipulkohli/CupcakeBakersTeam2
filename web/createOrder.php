@@ -45,38 +45,147 @@ if (!isset($_SESSION['id']))
 
 	</header>
 
-	<h2>Create a Custom Cupcake Order</h2>
+	<div id="createOrderContainer">
+		<h2>Create a Custom Cupcake Order</h2>
 
-	<div id="flavorsMenu" class="scrollable">
+		<form action="#" method="post">
 
-	<ul>
+			<div id="flavorsMenu">
 
-	<?php
+				<ul>
+
+					<?php
 
 	// CREATE THE FLAVOR CHOICESE USING THE REST API
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/flavors');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		$response = curl_exec($ch);
-		curl_close($ch);
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/flavors');
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+					curl_setopt($ch, CURLOPT_HEADER, FALSE);
+					$response = curl_exec($ch);
+					curl_close($ch);
 
-		$responseObj = json_decode($response,true);
+					$responseObj = json_decode($response,true);
 
-		foreach ($responseObj as $flavor) {
+					foreach ($responseObj as $flavor) {
 			//echo ("<li class='flavor selected' >");
-			echo ("<li class='flavor' >");
-			echo ("<img src='resources/artwork/" . $flavor['img_url'] . "' alt='" . $flavor['name'] . "' />");
-			echo ("<p>" . $flavor['name'] . "</p>");
-			echo ("</li>");
-		}
+						echo ("<li class='cupcakeOption' >");
+						echo ("<img src='resources/artwork/" . $flavor['img_url'] . "' alt='" . $flavor['name'] . "' />");
+						echo ("<p>" . $flavor['name'] . "</p>");
+						echo ("</li>");
+					}
 
-	?>
+					?>
 
-	</ul>
+				</ul>
+			</div>
+
+
+
+
+
+
+
+
+
+			<div id="icingsMenu" >
+
+				<ul>
+
+					<?php
+
+	// CREATE THE ICING CHOICESE USING THE REST API
+
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/icings');
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+					curl_setopt($ch, CURLOPT_HEADER, FALSE);
+					$response = curl_exec($ch);
+					curl_close($ch);
+
+					$responseObj = json_decode($response,true);
+
+					foreach ($responseObj as $icing) {
+						echo ("<li class='cupcakeOption' >");
+						echo ("<img src='resources/artwork/" . $icing['img_url'] . "' alt='" . $icing['name'] . "' />");
+						echo ("<p>" . $icing['name'] . "</p>");
+						echo ("</li>");
+					}
+
+					?>
+
+				</ul>
+			</div>
+
+
+
+
+
+
+			<div id="fillingsMenu" >
+
+				<ul>
+
+					<?php
+
+	// CREATE THE FILLING CHOICESE USING THE REST API
+
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/fillings');
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+					curl_setopt($ch, CURLOPT_HEADER, FALSE);
+					$response = curl_exec($ch);
+					curl_close($ch);
+
+					$responseObj = json_decode($response,true);
+
+					foreach ($responseObj as $filling) {
+						echo ("<li class='cupcakeOption' >");
+						echo ("<div class='filling' style='background-color: " . $filling['rgb'] . "'></div>");
+						echo ("<p>" . $filling['name'] . "</p>");
+						echo ("</li>");
+					}
+
+					?>
+
+				</ul>
+			</div>
+
+
+
+
+			<div id="toppingsMenu" >
+
+				<?php
+
+// CREATE THE TOPPING CHOICES USING THE REST API
+
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/toppings');
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+				curl_setopt($ch, CURLOPT_HEADER, FALSE);
+				$response = curl_exec($ch);
+				curl_close($ch);
+
+				$responseObj = json_decode($response,true);
+
+				foreach ($responseObj as $filling) {
+
+					echo ("<div class='toppingContainer'>");
+					echo ("<input type='checkbox' name='toppings' value='" . $filling['name'] . "' id='" . $filling['name'] . "' />");
+					echo ("<label for='" . $filling['name'] . "'>" . $filling['name'] . "</label>");
+					echo ("</div>");
+
+				}
+
+				?>
+
+			</div>
+		</form>
 	</div>
 
+	<footer>
+		Custom Cupcakes (2013)
+	</footer>
 </body>
-
 </html>

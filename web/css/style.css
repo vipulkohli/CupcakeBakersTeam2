@@ -1,24 +1,145 @@
-header h1 {
+
+h1,h2,h3,h4,h5,h6 {
 	margin: 0;
+	padding: 0;
+}
+header h1 {
+	/* Show the header in the top left corner */
+	margin: 1em;
 	float:left;
 }
 
+input {
+	/* display inputs on a new line */
+	display:block;
+}
+
+input[type="radio"] {
+	display: inline;
+}
+
 #loginContainer {
-	margin-right:0;
-	margin-left:auto;
+	float: right;
+	margin-top: 1em;
+	margin-right: 10em;
+	padding: .5em;
+
+	border: 3px solid black;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#logoutContainer {
+	float: right;
+}
+
+#createOrderContainer {
+	clear: both;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#createOrderContainer h2 {
+	text-align: center;
 }
 
 input {
 	display:block;
-	margin-left:24em;
+	margin-left:0em;
 }
 
-#leftHalf{
+#leftHalf {
+	clear:both;
 	float:left;
-	margin-right:10em;
-	height:30em;
+	margin-left: 5em;
+}
+
+#registerContainer {
+	float: right;
+	margin-right: 10em;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	padding: 2em;
+
+	border: 3px solid black;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
 label{
 	display:inline;
+}
+
+footer { 
+	text-align: center;
+	clear: both;
+	margin-bottom: 2em;
+}
+
+
+
+
+/* CREATE ORDER PAGE */
+
+ul {
+	/* Border around the menu */
+	/* Sets a width of 80% and enables the horizontal scrollbar */
+	border: 3px solid black;
+	border-radius: 5px;
+	margin: 0;
+	padding: 0;
+	overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin-bottom: 2em;
+}
+
+li {
+	/* Display the cupcake items using inline-block to display the scrollbar */
+	display:inline-block;
+	border: 1px solid black;
+}
+
+li p {
+	/* Center the cupcake item text */
+	margin: 0;
+	text-align: center;
+}
+
+li img {
+	/* Add padding to the cupcake item images */
+	padding: .5em;
+}
+
+.filling {
+	min-width: 100px;
+	height: 100px;
+}
+
+
+#toppingsMenu {
+	/* Border around the menu */
+	border: 3px solid black;
+	border-radius: 5px;
+	margin: 0;
+	padding: 1em;
+    margin-bottom: 2em;
+}
+
+#toppingsMenu input[type=checkbox] {
+	/* Checkbox and label on the same line */
+    float: left;
+    margin-right: 0.4em;
+    margin-bottom: 0.4em;
+}
+
+.toppingContainer {
+	/* Set each topping checkbox item to have a fixed with. Show in multiple columns using inline-block. */
+	clear: both;
+	width: 10em;
+    display: inline-block;
+    margin-right: 3em;
 }
