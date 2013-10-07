@@ -143,7 +143,7 @@ if (isset($_SESSION['id']))
 
 		<h1>Custom Cupcakes</h1>
 
-		<div id="loginContainer" >
+		<div id="loginContainer" class="cc-container" >
 
 		<h2>Customer Login</h2>
 			<?php
@@ -170,7 +170,7 @@ if (isset($_SESSION['id']))
 			<h3>Fast Delivery!</h3>
 	</div>
 
-	<div id="registerContainer">
+	<div id="registerContainer" class="cc-container">
 	
 	<h2>Create a Custom Cupcake Account</h2>
 	
@@ -184,7 +184,7 @@ if (isset($_SESSION['id']))
 		?> 
 
 		
-		<form method="POST" action="index.php">
+		<form id="registerForm" method="POST" action="index.php">
 
 			<label for="join_mailing_list">Join Our Mailing List:</label>
 			<input type="radio" name="join_mailing_list" id="join_mailing_list_yes" value="true" /> 
@@ -204,8 +204,9 @@ if (isset($_SESSION['id']))
 			<input type="text" name="address" placeholder="Address" required autocomplete="on" />
 			<input type="text" name="city" placeholder="City" required autocomplete="on" />
 
-			<label for="state">State:</label>
+			<!-- <label for="state">State:</label> -->
 			<select id="state" name="state" required>
+				<option value="" disabled selected>Select Your State</option>
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>
@@ -259,7 +260,7 @@ if (isset($_SESSION['id']))
 				<option value="WY">Wyoming</option>
 			</select>
 
-			<input type="number" name="zip_code" pattern="^\d{5,9}$" placeholder="Zip Code" title="Please enter a valid zip code" required autocomplete="on" />
+			<input type="text" pattern="\d*" name="zip_code" placeholder="Zip Code" title="Please enter a valid zip code" required autocomplete="on" />
 			<input type="submit" name="submit" value="Sign Up" />
 		</form>
 	</div>

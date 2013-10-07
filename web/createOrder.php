@@ -27,6 +27,7 @@ if (!isset($_SESSION['id']))
 
 <head>
 	<title>Custom Cupcakes | Create Order</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
@@ -51,9 +52,8 @@ if (!isset($_SESSION['id']))
 		<form action="#" method="post">
 
 			<div id="flavorsMenu">
-
+				<h3>Select a cupcake flavor</h3>
 				<ul>
-
 					<?php
 
 	// CREATE THE FLAVOR CHOICESE USING THE REST API
@@ -89,7 +89,7 @@ if (!isset($_SESSION['id']))
 
 
 			<div id="icingsMenu" >
-
+				<h3>Select an icing flavor</h3>
 				<ul>
 
 					<?php
@@ -123,7 +123,7 @@ if (!isset($_SESSION['id']))
 
 
 			<div id="fillingsMenu" >
-
+				<h3>Select a filling flavor</h3>
 				<ul>
 
 					<?php
@@ -153,9 +153,8 @@ if (!isset($_SESSION['id']))
 
 
 
-
+			<h3>Select your toppings</h3>
 			<div id="toppingsMenu" >
-
 				<?php
 
 // CREATE THE TOPPING CHOICES USING THE REST API

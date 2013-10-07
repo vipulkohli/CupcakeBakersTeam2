@@ -1,72 +1,118 @@
 
+/*
+
+COLOR PALETTE
+
+#805841
+#DCF7F3
+#FFFCDD
+#FFD8D8
+#F5A2A2
+
+*/
 h1,h2,h3,h4,h5,h6 {
 	margin: 0;
 	padding: 0;
 }
-header h1 {
-	/* Show the header in the top left corner */
-	margin: 1em;
-	float:left;
+
+h1,h2,h3,h4,h5,h6,p,input,label,header,footer {
+	color: #805841;
 }
 
 input {
-	/* display inputs on a new line */
+	background-color: #FFFCDD;
+	font-size: 14px;
+}
+
+input[type="text"],input[type="password"],input[type="number"],input[type="email"],input[type="telephone"],select {
 	display:block;
+	width: 20em;
+	height: 2em;
+	border-radius: 5px;
+	padding-left: .5em;
+	border: 1px solid gray;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+input[type="submit"] {
+    float: right;
+    height: 2em;
+    border-radius: 5px;
+    border: 1px solid gray;
 }
 
 input[type="radio"] {
 	display: inline;
 }
 
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	background-color: #FFD8D8;
+}
+
+input,select,button {
+	font-family: inherit;
+	font-size:  inherit;
+}
+header h1 {
+	/* Show the header in the top left corner */
+	margin: 0;
+	font-size: 70px;
+	float:left;
+}
+
+.cc-container {
+	background-color: #DCF7F3;
+}
+
 #loginContainer {
 	float: right;
 	margin-top: 1em;
-	margin-right: 10em;
-	padding: .5em;
+	margin-right: 5em;
+	padding: 1em;
+	width: 20em;
 
-	border: 3px solid black;
+	border: 3px solid #805841;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 }
 
-#logoutContainer {
+#loginContainer input {
+	width: 100%;
+	
+}
+#loginContainer input[type="submit"] {
+	width: 5em;
 	float: right;
+	margin: 0;
 }
 
-#createOrderContainer {
-	clear: both;
-	width: 80%;
-	margin-left: auto;
-	margin-right: auto;
+
+#registerContainer {
+	float: right;
+	margin-right: 5em;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	padding: 2em;
+	width: 30em;
+
+	border: 3px solid #805841;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 
-#createOrderContainer h2 {
-	text-align: center;
-}
-
-input {
-	display:block;
-	margin-left:0em;
+#registerForm {
+	margin-top: 1em;
 }
 
 #leftHalf {
 	clear:both;
 	float:left;
 	margin-left: 5em;
-}
-
-#registerContainer {
-	float: right;
-	margin-right: 10em;
-	margin-top: 2em;
-	margin-bottom: 2em;
-	padding: 2em;
-
-	border: 3px solid black;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
 }
 
 label{
@@ -83,6 +129,24 @@ footer {
 
 
 /* CREATE ORDER PAGE */
+
+#logoutContainer {
+	float: right;
+	margin-top: 2em;
+	margin-right: 2em;
+}
+
+#createOrderContainer {
+	clear: both;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#createOrderContainer h2 {
+	text-align: center;
+}
+
 
 ul {
 	/* Border around the menu */
@@ -107,6 +171,10 @@ li p {
 	/* Center the cupcake item text */
 	margin: 0;
 	text-align: center;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
 }
 
 li img {
@@ -127,19 +195,27 @@ li img {
 	margin: 0;
 	padding: 1em;
     margin-bottom: 2em;
+    background-color: #DCF7F3;
 }
 
 #toppingsMenu input[type=checkbox] {
 	/* Checkbox and label on the same line */
     float: left;
     margin-right: 0.4em;
-    margin-bottom: 0.4em;
+    margin-bottom: 0.6em;
 }
 
 .toppingContainer {
 	/* Set each topping checkbox item to have a fixed with. Show in multiple columns using inline-block. */
 	clear: both;
-	width: 10em;
+	width: 14em;
     display: inline-block;
     margin-right: 3em;
+}
+
+/* EMPLOYEE ANALYTICS PAGE */
+
+#pieCharts div,#barCharts div {
+	padding-top: 10em;
+	font-family: inherit;
 }
