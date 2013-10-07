@@ -11,7 +11,7 @@ session_start();
 
 
 if (isset($_POST['submit'])) {
-	if($_POST['submit'] == 'Log out')
+    if($_POST['submit'] == 'Log out')
 	{
 		// Destroy the session
 		$_SESSION = array();
@@ -153,9 +153,11 @@ if (isset($_SESSION['id']))
 			?> 
 
 			<form method="POST" action="index.php">
+            <fieldset><legend>Sign in</legend>
 				<input type="email" name="email" placeholder="Email Address" required autocomplete="on" />
 				<input type="password" name="password" placeholder="Password" required autocomplete="on" />
 				<input type="submit" name="submit" value="Log in" />
+                </fieldset>
 			</form>
 		</div>
 
@@ -182,25 +184,20 @@ if (isset($_SESSION['id']))
 
 		<div id="rightHalf">
 		<form method="POST" action="index.php">
-
+<fieldset><legend>Create Your CustomCupcakes Account</legend>
 			<label for="join_mailing_list">Join Our Mailing List:</label>
 			<input type="radio" name="join_mailing_list" value="true" /> Yes
 			<input type="radio" name="join_mailing_list" value="false" /> No
-<fieldset><legend>Create Your CustomCupcakes Account</legend>
 			<input type="text" name="first_name" placeholder="First Name" required autocomplete="on" />
 			<input type="text" name="last_name" placeholder="Last Name" required autocomplete="on" />
-
-			<input type="email" name="email" placeholder="Email Address" required autocomplete="on" />
-			<input type="password" name="password" placeholder="Password" required autocomplete="on" />
-
-			<input type="telephone" name="telephone" placeholder="Telephone Number" required autocomplete="on" />
-
+			<input type="email" name="email" placeholder="Email Address" required autocomplete="on" title="For example: custom@supcakes.com" />			
+            <input type="password" name="password" placeholder="Password" pattern=".{8,}" title="8 characters minimum" required autocomplete="on" />
+			<input type="telephone" name="telephone" placeholder="Telephone Number" title="10 digits exactly" pattern=".{10,}" required autocomplete="on" />
 			<input type="text" name="address" placeholder="Address" required autocomplete="on" />
-
 			<input type="text" name="city" placeholder="City" required autocomplete="on" />
 
 			<label for="state">State:</label>
-<select id="state" name="state" placeholder="Select State" required>
+<select id="state" name="state" required>
 <option value="AL">Alabama</option>
 <option value="AK">Alaska</option>
 <option value="AZ">Arizona</option>
@@ -254,7 +251,7 @@ if (isset($_SESSION['id']))
 <option value="WY">Wyoming</option>
 </select>
 
-			<input type="number" name="zip_code" placeholder="Zip Code" required autocomplete="on" />
+			<input type="number" name="zip_code" pattern=".{5,9}" placeholder="Zip Code" title="5 digits minimum" required autocomplete="on" />
 			<input type="submit" name="submit" value="Sign Up" />
 		</fieldset>
 		</form>
