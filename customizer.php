@@ -8,7 +8,7 @@
 
 <body>
 	<div id="shoppingCart">
-	
+		<h2>Shopping Cart</h2>	
 	</div>
 
 	<div id="favorites">
@@ -22,7 +22,8 @@
 		#curl_close($ch);
 	?>
 	</div>
-
+	
+	<div id="custom">
 	<div id="flavors">
 	<h2>Flavors</h2>
 	<div class="scroll">
@@ -30,7 +31,7 @@
 	</div>
 	</div>
 
-	<divid="fillings">
+	<div id="fillings">
 	<h2>Fillings</h2>
 	<div class="scroll">
 	This is a scrolls box.
@@ -49,6 +50,8 @@
 	<div id="buttons">
 		This is the button box.
 	</div>
+	</div>
+
 	</div>
 
 

@@ -5,3 +5,48 @@
 	overflow-x:scroll;	
 }
 
+#buttons{
+	border:1px solid black;
+	width:80%;
+	overflow-x:scroll;	
+}
+
+#custom{
+	border:1px solid black;
+	padding:20px;
+}
+
+#shoppingCart{
+	border:1px solid black;
+	margin-right:0;
+	margin-left:auto;
+	height:10em;
+	width:20em;
+}
+
+#favorites{
+	height:25em;
+	width:10em;
+	border:1px solid black;
+	float:left;
+}
+
+#login{
+	margin-right:0;
+	margin-left:auto;
+	width:20em;
+	border:1px solid black;
+}
+
+#creation{
+	float:right;
+}
+
+#body{
+	float:left;
+}
+
+
+
+
+
