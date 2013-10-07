@@ -1,7 +1,6 @@
-Team7Cupcakes
+Custom Cupcakes - Team 2
 =============
-This is the code base for our CUSTOM CUPCAKES WEB SITE!
-Cupcake Creators:
+Creators:
 Vipul Kohli
 Roman
 Raymond Martin
@@ -9,4 +8,4 @@ Elena Villamil
 Raz Friman
 
 
-WE DID NOT YET ATTEMPT THE BONUS!
+We have attempted and successfully accomplished the bonus.
