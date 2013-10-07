@@ -1,11 +1,25 @@
 header h1 {
 	margin: 0;
+	float:left;
 }
 
 #loginContainer {
-
+	margin-right:0;
+	margin-left:auto;
+	width:11em;
 }
 
 input {
 	display:block;
+	margin-left:24em;
+}
+
+#leftHalf{
+	float:left;
+	margin-right:10em;
+	height:30em;
+}
+
+label{
+	display:inline;
 }

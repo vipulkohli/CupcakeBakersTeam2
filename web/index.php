@@ -160,10 +160,17 @@ if (isset($_SESSION['id']))
 		</div>
 
 	</header>
+	
+	<div id="leftHalf">
+			<img id="logoImg" src="" alt="Custom Cupcakes Logo">
+			<h3>Great Flavors!</h3>
+			<h3>Awesome Cupcakes!</h3>
+			<h3>Fast Delivery!</h3>
+	</div>
 
-	<h2>Create a Custom Cupcake Account</h2>
 	<div id="registerContainer">
-
+	<h2>Create a Custom Cupcake Account</h2>
+	
 		<?php
 
 		if(isset($_SESSION['msg']['reg-err']))
@@ -173,6 +180,7 @@ if (isset($_SESSION['id']))
 		}
 		?> 
 
+		
 		<form method="POST" action="index.php">
 
 			<label for="join_mailing_list">Join Our Mailing List:</label>
@@ -203,10 +211,6 @@ if (isset($_SESSION['id']))
 		</form>
 	</div>
 
-	<div id="leftHalf">
-		<img id="logoImg" src="" />
-		<h3>You design it. We make it.</h3>
-	</div>
 	<footer>
 
 	</footer>
