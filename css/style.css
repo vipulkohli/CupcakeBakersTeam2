@@ -34,19 +34,35 @@
 #login{
 	margin-right:0;
 	margin-left:auto;
-	width:20em;
-	border:1px solid black;
+	width:16em;
 }
 
 #creation{
-	float:right;
+	height:25em;
 }
+
 
 #body{
 	float:left;
+	height:25em;
+	width:50%;
 }
 
+label{
+	display: inline-block;
+    clear: left;
+    width: 9em;
+    text-align: left;
+}
 
+div#login label{
+	width:5em;
+}
 
+div#login .button{
+	margin-left:16em;
+}
 
-
+.button{
+	margin-left:21.5em;
+}
