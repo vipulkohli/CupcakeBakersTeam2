@@ -1,4 +1,4 @@
-FavoriteId,UserId,CupcakeId,FrostingId,CupcakeFillingId
+id,user_id,cupcake_id,frosting_id,filling_id
 1,1,1,1,9
 2,1,2,2,2
 3,2,3,3,3
