@@ -1,2 +1,7 @@
-
+.scroll{
+	border:1px solid black;
+	width:80%;
+	overflow-y:hidden;
+	overflow-x:scroll;	
+}
 
