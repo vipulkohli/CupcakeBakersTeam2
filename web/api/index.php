@@ -113,8 +113,8 @@ $app->post(
 		// Get the JSON Request
 		$request = $app->request()->getBody();
 
-		// Get the username/password from the JSON request
-		$username = $request['username'];
+		// Get the email/password from the JSON request
+		$email = $request['email'];
 		$password = $request['password'];
 
 		// Init the response variable
@@ -124,13 +124,13 @@ $app->post(
 
    		// VALIDATE THE PASSWORD
 		try {
-			$sth = $db->prepare('SELECT * FROM users WHERE username = :username');
-			$sth->bindParam(':username', $username);
+			$sth = $db->prepare('SELECT * FROM users WHERE email = :email');
+			$sth->bindParam(':email', $email);
 			$sth->execute();
 
 			if ($sth->rowCount() == 0) {
 				// No matching users
-				$reason = 'Incorrect username/password';
+				$reason = 'Incorrect email/password';
 			} else {
 
 				// Get the user data
@@ -147,12 +147,12 @@ $app->post(
 				}
 				else
 				{
-					$reason = 'Incorrect username/password';
+					$reason = 'Incorrect email/password';
 				}
 			}
 		} catch(PDOException $e) {
 			$success = false;
-			$reason = 'Incorrect username/password';
+			$reason = 'Incorrect email/password';
 		}
 
 		// Create the response data
@@ -167,9 +167,80 @@ $app->post(
 		$response = $app->response();
 		$response['Content-Type'] = 'application/json';
 		$response->status(200);
-		$response->write(json_encode($dataArray,JSON_NUMERIC_CHECK));
+		$response->write(json_encode($dataArray));
 	}
 	);
+
+// CREATE A USER ACCOUNT
+$app->post(
+	'/users',
+	function () use ($app,$db) {
+
+		$request = $app->request()->getBody();
+
+		// Load all of the JSON Request variables
+		$email = $request['email'];
+        $password = $request['password'];
+        $first_name = $request['first_name'];
+        $last_name = $request['last_name'];
+        $date_created = date("Y-m-d H:i:s");
+        $telephone = $request['telephone'];
+        $address = $request['address'];
+        $city = $request['city'];
+        $state = $request['state'];
+        $zip_code = $request['zip_code'];
+
+        // Calculate the password hash and salt
+        $hashResult = hashPassword($password);
+        $hashed_password = $hashResult[0];
+        $salt = $hashResult[1];
+
+        // Init the response variables
+        $success = false;
+        $reason = '';
+        $insert_id = 0;
+
+        try {
+
+        	// Insert the user data into the Users table
+        	$sth = $db->prepare('INSERT INTO users (email,first_name,last_name,password,salt,telephone,address,city,state,zip_code,date_created) 
+        		VALUES (:email,:first_name,:last_name,:password,:salt,:telephone,:address,:city,:state,:zip_code,:date_created)');
+        	$sth->bindParam(':email', $email);
+        	$sth->bindParam(':first_name', $first_name);
+        	$sth->bindParam(':last_name', $last_name);
+        	$sth->bindParam(':password', $hashed_password);
+        	$sth->bindParam(':salt', $salt);
+        	$sth->bindParam(':telephone', $telephone);
+        	$sth->bindParam(':address', $address);
+        	$sth->bindParam(':city', $city);
+        	$sth->bindParam(':state', $state);
+        	$sth->bindParam(':zip_code', $zip_code);
+        	$sth->bindParam(':date_created', $date_created);
+        	$sth->execute();
+
+        	$success = true;
+
+        	// return the id of the inserted user
+        	$insert_id = $db->lastInsertId();
+
+        } catch(PDOException $e) {
+        	$success = false;
+        	$reason = $e->getMessage();
+        }
+
+        // Create the response data
+        $dataArray = array(
+        	'success' => $success,
+        	'reason' => $reason,
+        	'user_id' => $insert_id);
+        
+        // Send the JSON response
+        $response = $app->response();
+        $response['Content-Type'] = 'application/json';
+        $response->status(200);
+        $response->write(json_encode($dataArray));
+    }
+    );
 
 // GET USER PROFILE INFORMATION
 $app->get(
@@ -203,11 +274,11 @@ $app->get(
 		$response = $app->response();
 		$response['Content-Type'] = 'application/json';
 		$response->status(200);
-		$response->write(json_encode($userData,JSON_NUMERIC_CHECK));
+		$response->write(json_encode($userData));
 	}
 	);
 
-// GET USER QUESTIONS
+// GET USER FAVORITE CUPCAKE INFORMATION
 $app->get(
 	'/users/:id/favorites',
 	function ($id) use ($app,$db) {
@@ -244,7 +315,6 @@ $app->get(
 		$response->write(json_encode($favorites_data,JSON_NUMERIC_CHECK));
 	}
 	);
-
 
 // ADD A FAVORITE CUPCAKE TO A USER
 $app->post(
@@ -296,80 +366,6 @@ $app->post(
 
     }
     );
-
-
-// CREATE A USER ACCOUNT
-$app->post(
-	'/users',
-	function () use ($app,$db) {
-
-		$request = $app->request()->getBody();
-
-		// Load all of the JSON Request variables
-		$email = $request['email'];
-        $password = $request['password'];
-        $first_name = $request['first_name'];
-        $last_name = $request['last_name'];
-        $salt = '';
-        $date_created = date("Y-m-d H:i:s");
-        $telephone = $request['telephone'];
-        $address = $request['address'];
-        $city = $request['city'];
-        $state = $request['state'];
-        $zip_code = $request['zip_code'];
-
-        // Calculate the password hash and salt
-        $hashResult = hashPassword($password);
-        $hashed_password = $hashResult[0];
-        $salt = $hashResult[1];
-
-        // Init the response variables
-        $success = false;
-        $reason = '';
-        $insert_id = 0;
-
-        try {
-
-        	// Insert the user data into the Users table
-        	$sth = $db->prepare('INSERT INTO users (email,first_name,last_name,password,salt,telephone,address,city,state,zip_code,,date_created) 
-        		VALUES (:email,:first_name,:last_name,:password,:salt,:telephone,:address,:city,:state,:zip_code,:date_created)');
-        	$sth->bindParam(':email', $email);
-        	$sth->bindParam(':first_name', $first_name);
-        	$sth->bindParam(':last_name', $last_name);
-        	$sth->bindParam(':password', $hashed_password);
-        	$sth->bindParam(':salt', $salt);
-        	$sth->bindParam(':telephone', $telephone);
-        	$sth->bindParam(':address', $address);
-        	$sth->bindParam(':city', $city);
-        	$sth->bindParam(':state', $state);
-        	$sth->bindParam(':zip_code', $zip_code);
-        	$sth->bindParam(':date_created', $date_created);
-        	$sth->execute();
-
-        	$success = true;
-
-        	// return the id of the inserted user
-        	$insert_id = $db->lastInsertId();
-
-        } catch(PDOException $e) {
-        	$success = false;
-        	$reason = $e->getMessage();
-        }
-
-        // Create the response data
-        $dataArray = array(
-        	'success' => $success,
-        	'reason' => $reason,
-        	'insert_id' => $insert_id);
-        
-        // Send the JSON response
-        $response = $app->response();
-        $response['Content-Type'] = 'application/json';
-        $response->status(200);
-        $response->write(json_encode($dataArray,JSON_NUMERIC_CHECK));
-    }
-    );
-
 
 // GET LIST OF ALL FLAVORS
 $app->get(
@@ -472,7 +468,15 @@ $app->get(
 	);
 
 // TODO
-// Add functions to Create/Update/Submit order
+// SUBMIT AN ORDER
+$app->post(
+	'/orders',
+	function () use ($app,$db) {
 
+		// TODO:
+		// submit the order
+		// update the quantity_ordered for each component
+		
+		});
 // Run the Slim app
 $app->run();
