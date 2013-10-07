@@ -186,7 +186,7 @@ if (isset($_SESSION['id']))
 			<label for="join_mailing_list">Join Our Mailing List:</label>
 			<input type="radio" name="join_mailing_list" value="true" /> Yes
 			<input type="radio" name="join_mailing_list" value="false" /> No
-
+<fieldset><legend>Create Your CustomCupcakes Account</legend>
 			<input type="text" name="first_name" placeholder="First Name" required autocomplete="on" />
 			<input type="text" name="last_name" placeholder="Last Name" required autocomplete="on" />
 
@@ -256,6 +256,7 @@ if (isset($_SESSION['id']))
 
 			<input type="number" name="zip_code" placeholder="Zip Code" required autocomplete="on" />
 			<input type="submit" name="submit" value="Sign Up" />
+		</fieldset>
 		</form>
 	</div>
 
