@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 			'address' => $_POST['address'],
 			'city' => $_POST['city'],
 			'state' => $_POST['state'],
-			'zip_code' => $_POST['zip_code'],
+			'zip_code' => $_POST['zip_code']
 			);
 
 		$ch = curl_init();
@@ -103,7 +103,8 @@ if (isset($_POST['submit'])) {
 		}
 		else
 		{
-			$err[]='Could not create account';	
+			$err[]='Could not create account';
+			$err[]=$responseObj['reason'];
 		}
 
 		if($err)
@@ -132,6 +133,7 @@ if (isset($_SESSION['id']))
 
 <head>
 	<title>Custom Cupcakes</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
@@ -190,7 +192,9 @@ if (isset($_SESSION['id']))
 			<input type="radio" name="join_mailing_list" id="join_mailing_list_no" value="false" />
 			<label for="join_mailing_list_no">No</label>
 
-
+			<input type="text" name="first_name" placeholder="First Name" required autocomplete="on" />
+		    <input type="text" name="last_name" placeholder="Last Name" required autocomplete="on" />
+			
 			<input type="email" name="email" placeholder="Email Address" required autocomplete="on" title="Please enter a valid email address" />			
 			<input type="password" name="password" placeholder="Password" pattern="^.{8,}$" title="Password must be at least 8 characters" required autocomplete="on" />
 			
