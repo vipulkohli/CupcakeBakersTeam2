@@ -47,6 +47,36 @@ if (!isset($_SESSION['id']))
 
 	<h2>Create a Custom Cupcake Order</h2>
 
+	<div id="flavorsMenu" class="scrollable">
+
+	<ul>
+
+	<?php
+
+	// CREATE THE FLAVOR CHOICESE USING THE REST API
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/flavors');
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		$response = curl_exec($ch);
+		curl_close($ch);
+
+		$responseObj = json_decode($response,true);
+
+		foreach ($responseObj as $flavor) {
+			//echo ("<li class='flavor selected' >");
+			echo ("<li class='flavor' >");
+			echo ("<img src='resources/artwork/" . $flavor['img_url'] . "' alt='" . $flavor['name'] . "' />");
+			echo ("<p>" . $flavor['name'] . "</p>");
+			echo ("</li>");
+		}
+
+	?>
+
+	</ul>
+	</div>
+
 </body>
 
 </html>
