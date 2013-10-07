@@ -160,14 +160,14 @@ if (isset($_SESSION['id']))
 		</div>
 
 	</header>
-	
-	<div id="leftHalf">
-			<img id="logoImg" src="" alt="Custom Cupcakes Logo">
+
+
+		<div id="leftHalf">
+			<img id="logoImg" src="" alt="Custom Cupcakes Logo"/>
 			<h3>Great Flavors!</h3>
 			<h3>Awesome Cupcakes!</h3>
 			<h3>Fast Delivery!</h3>
-	</div>
-
+		</div>
 	<div id="registerContainer">
 	<h2>Create a Custom Cupcake Account</h2>
 	
@@ -180,7 +180,7 @@ if (isset($_SESSION['id']))
 		}
 		?> 
 
-		
+		<div id="rightHalf">
 		<form method="POST" action="index.php">
 
 			<label for="join_mailing_list">Join Our Mailing List:</label>
