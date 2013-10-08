@@ -1,0 +1,21 @@
+htaccess works by allowing you to set directory-specific configurations for apache. This lets you set any number of settings and options and have them only apply to certain files. This is useful in hiding certain files. However, this can even be extending to setting other options as well. We are using it to hide access to the employee page and the documentation folder to everyone outside of SMU IP Address range.
+
+To start, we must tell Apache that we want to override the default configuration. In the sites-available/default file, we need to change the AllowOverride option from None to All.
+
+/etc/apache2/sites-available/default
+
+Change:
+AllowOverride None
+
+To:
+AllowOverride All
+
+
+Finally, we create a .htaccess file in the directory we want it to be applied to. For example, there is a .htaccess file in the documentation folder. Then, inside the file, we specifiy who can access the file. In our case we use:
+
+Order Deny,Allow
+Deny from All
+Allow from 129.119
+
+This block the file from everyone. However, it allows people whose IP address starts with 129.119, which is SMU's IP address range.
+

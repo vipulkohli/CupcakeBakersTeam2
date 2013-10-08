@@ -71,6 +71,7 @@ if (isset($_POST['submit'])) {
 		
 		// REGISTER USING REST API
 
+		// Create the JSON Request variables
 		$request = array(
 			'email' => $_POST['email'],
 			'password' => $_POST['password'],
@@ -84,6 +85,10 @@ if (isset($_POST['submit'])) {
 			'zip_code' => $_POST['zip_code']
 			);
 
+		// Remove all non-digits from the telephone string using regex
+		$request['telephone'] = preg_replace("/[^0-9]/", '', $request['telephone']);
+
+		// Create the REST API Request
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/users');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -94,23 +99,29 @@ if (isset($_POST['submit'])) {
 		$response = curl_exec($ch);
 		curl_close($ch);
 
+		// Decode the JSON Response
 		$responseObj = json_decode($response,true);
 
 		if($responseObj['success'])
 		{
+			// Successfully create user.
+			// Automatically log them in
 			$_SESSION['id'] = $responseObj['user_id'];
 			setcookie('rememberCookie',true);
 		}
 		else
 		{
+			// Could not create account
 			$err[]=$responseObj['reason'];
 		}
 
 		if($err)
 		{
+			// Save the message to the session to display later
 			$_SESSION['msg']['reg-err'] = implode('<br />',$err);
-		}	
+		}
 		
+		// Reload the page
 		header("Location: index.php");
 		exit;
 	}
@@ -119,7 +130,6 @@ if (isset($_POST['submit'])) {
 if (isset($_SESSION['id']))
 {
 	// The user is logged in.
-
 	// Redirect to the create order page
 	header('Location: createOrder.php');
 	exit;
@@ -153,6 +163,7 @@ if (isset($_SESSION['id']))
 
 			if(isset($_SESSION['msg']['login-err']))
 			{
+				// Display the login error message
 				echo '<div class="error">'.$_SESSION['msg']['login-err'].'</div>';
 				unset($_SESSION['msg']['login-err']);
 			}
@@ -162,8 +173,8 @@ if (isset($_SESSION['id']))
 			</div>
 
 			<form id="loginForm" method="POST" action="index.php">
-				<input type="email" name="email" placeholder="Email Address" required autocomplete="on" />
-				<input type="password" name="password" placeholder="Password" required autocomplete="on" />
+				<input type="email" name="email" placeholder="Email Address" title="Please enter a valid email" required autocomplete="on" />
+				<input type="password" name="password" placeholder="Password" title="Password must be at least 8 characters" required autocomplete="on" />
 				<input type="submit" name="submit" value="Log in" />
 			</form>
 		</div>
@@ -171,9 +182,9 @@ if (isset($_SESSION['id']))
 	</header>
 	
 	<div id="leftHalf">
-			<h3>Great Flavors!</h3>
-			<h3>Awesome Cupcakes!</h3>
-			<h3>Fast Delivery!</h3>
+			<h2>Great Flavors!</h2>
+			<h2>Awesome Cupcakes!</h2>
+			<h2>Fast Delivery!</h2>
 	</div>
 
 	<div id="registerContainer" class="cc-container">

@@ -70,7 +70,7 @@ if (!isset($_SESSION['id']))
 					$responseObj = json_decode($response,true);
 
 					foreach ($responseObj as $flavor) {
-						echo ("<li class='cupcakeOption' >");
+						echo ("<li class='cupcakeOption flavor' >");
 						echo ("<img src='resources/artwork/" . $flavor['img_url'] . "' alt='" . $flavor['name'] . "' />");
 						echo ("<p>" . $flavor['name'] . "</p>");
 						echo ("</li>");
@@ -99,7 +99,7 @@ if (!isset($_SESSION['id']))
 					$responseObj = json_decode($response,true);
 
 					foreach ($responseObj as $icing) {
-						echo ("<li class='cupcakeOption' >");
+						echo ("<li class='cupcakeOption icing' >");
 						echo ("<img src='resources/artwork/" . $icing['img_url'] . "' alt='" . $icing['name'] . "' />");
 						echo ("<p>" . $icing['name'] . "</p>");
 						echo ("</li>");
@@ -128,7 +128,7 @@ if (!isset($_SESSION['id']))
 					$responseObj = json_decode($response,true);
 
 					foreach ($responseObj as $filling) {
-						echo ("<li class='cupcakeOption' >");
+						echo ("<li class='cupcakeOption filling' >");
 						echo ("<div class='filling' style='background-color: " . $filling['rgb'] . "'></div>");
 						echo ("<p>" . $filling['name'] . "</p>");
 						echo ("</li>");
@@ -164,10 +164,11 @@ if (!isset($_SESSION['id']))
 				}
 
 				?>
-
+				<input type="button" id="resetToppingButton" value="Reset Toppings" />
 			</div>
+				
 
-			<input type="reset" value="Reset Current Cupcake" />
+			<input type="reset" id ="resetCupcakeButton" value="Reset Current Cupcake" />
 			<input type="submit" value="Submit Order" />
 		</form>
 

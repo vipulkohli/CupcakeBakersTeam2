@@ -11,7 +11,6 @@ function loadFavorites() {
            
             var favorites_data = JSON.parse(request.responseText);
 
-            console.log(request.responseText);
             favorites_menu.innerHTML += request.responseText;
 
         }
@@ -20,12 +19,56 @@ function loadFavorites() {
 }
 
 
+function clickFlavor() {
+    resetFlavors();
+    $(this).addClass('selected');
+}
+
+function resetFlavors() {
+    $('.flavor').removeClass('selected');
+}
 
 
+function clickFilling() {
+    resetFillings();
+    $(this).addClass('selected');
+}
 
+function resetFillings() {
+    $('.filling').removeClass('selected');
+}
+
+function clickIcing() {
+    resetIcings();
+    $(this).addClass('selected');
+}
+
+function resetIcings() {
+    $('.icing').removeClass('selected');
+}
+
+function resetToppings() {
+    $("input[name='toppings']").prop('checked', false);
+}
+
+function resetCupcake(e) {
+    resetFlavors();
+    resetFillings();
+    resetIcings();
+    resetToppings();
+
+    e.preventDefault();
+}
 
 
 
 $(document).ready(function () {
     loadFavorites();
+    
+    $('.flavor').click(clickFlavor);
+    $('.filling').click(clickFilling);
+    $('.icing').click(clickIcing);
+    $('#resetCupcakeButton').click(resetCupcake);
+    $('#resetToppingButton').click(resetToppings);
+
 });

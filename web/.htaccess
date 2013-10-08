@@ -1,0 +1,5 @@
+<Files employee.php>
+deny from all
+allow from 129.119
+</Files>
+
