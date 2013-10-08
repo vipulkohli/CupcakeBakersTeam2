@@ -19,6 +19,14 @@ if (!isset($_SESSION['id']))
 	exit;
 }
 
+if (isset($_POST['submit'])) {
+
+	//  SUBMIT THE ORDER VIA THE REST API
+
+	// Then redirect to the employee analytics page
+	header('Location: employee.php');
+}
+
 
 ?>
 
@@ -41,7 +49,7 @@ if (!isset($_SESSION['id']))
 
 		<div id="logoutContainer" >
 
-			<form method="POST" action="index.php">
+			<form method="POST" action="#">
 				<input type="submit" name="submit" value="Log out" />
 			</form>
 		</div>
@@ -56,6 +64,7 @@ if (!isset($_SESSION['id']))
 		<div id="orderMenu">
 	Order Menu:
 
+		<!--
 		<div class="orderItem">
 		<img src="resources/artwork/cupcake_icon.png" />
 		<label>
@@ -71,6 +80,8 @@ if (!isset($_SESSION['id']))
 		</label>
 		<input type="button" value="X" />
 		</div>
+
+		-->
 
 	</div>
 
@@ -183,7 +194,7 @@ if (!isset($_SESSION['id']))
 				foreach ($responseObj as $filling) {
 
 					echo ("<div class='toppingContainer'>");
-					echo ("<input type='checkbox' name='toppings' value='" . $filling['name'] . "' id='" . $filling['name'] . "' />");
+					echo ("<input type='checkbox' name='toppings' value='" . $filling['name'] . "'' id='" . $filling['name'] . "' />");
 					echo ("<label for='" . $filling['name'] . "'>" . $filling['name'] . "</label>");
 					echo ("</div>");
 
@@ -196,7 +207,9 @@ if (!isset($_SESSION['id']))
 
 			<input type="reset" id ="resetCupcakeButton" value="Reset Current Cupcake" />
 			<input type="button" id ="addCupcakeButton" value="Add to Order" />
-			<input type="submit" value="Submit Order" />
+			<input type="button" id="saveFavoriteButton" value="Add to Favorites" />
+
+			<input type="submit" name="submit" value="Submit Order" />
 		</form>
 		
 	</div>

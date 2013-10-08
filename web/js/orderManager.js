@@ -12,6 +12,8 @@ var currentFilling = -1;
 var currentToppings = [];
 
 var favorites_data = [];
+var order_data = [];
+
 
 function loadCupcakeData() {
     
@@ -137,13 +139,17 @@ function resetIcings() {
 
 function clickTopping() {
 
+    var topping_name = $(this).attr( "id" );
+    
+    console.log(topping_name);
+    
     if ($(this).is(':checked')) {
         // Add toppings
-        currentToppings.push($(this).index());
+        currentToppings.push(topping_name);
     } else {
         // Remove topping
 
-        var toppingIndex = currentToppings.indexOf($(this).index());
+        var toppingIndex = currentToppings.indexOf(topping_name);
 
         if (toppingIndex > -1) {
             currentToppings.splice(toppingIndex, 1);
@@ -236,13 +242,71 @@ function loadFromFavorites() {
     //console.log('Load from favorites:' + index);
 }
 
+function addToFavorites() {
+    // TODO
+}
+
+function removeFromOrder() {
+    // Remove from internal array of orders
+    var index = $(this).parent().index();
+
+    //console.log('Order Item Index: ' + index);
+
+
+    order_data.splice(index, 1);
+
+    // Remove from UI
+    $(this).parent().remove();
+}
+
 function addToOrder() {
+
+
+    var order_menu = $('#orderMenu');
 
     if (currentFlavor > -1 && currentIcing > -1 && currentFilling > -1 && currentToppings.length > 0) {
         console.log(currentToppings);
         console.log(flavors[currentFlavor].name);
         console.log(icings[currentIcing].name);
         console.log(fillings[currentFilling].name);
+
+
+        order_data.push(
+        {
+            "flavor_id": flavors[currentFlavor].id,
+            "icing_id": icings[currentIcing].id,
+            "filling_id": fillings[currentFilling].id,
+            "toppings": currentToppings
+        });
+
+        var order_element = $(document.createElement('div'));
+        order_element.addClass('orderItem');
+        order_element.append("<img src='resources/artwork/cupcake_icon.png' />");
+
+        var label = $(document.createElement('label'));
+        label.append(flavors[currentFlavor].name);
+
+        order_element.append(label);
+
+        var remove_button = $(document.createElement('input'));
+        remove_button.attr('type', 'button');
+        remove_button.addClass('removeOrderItem');
+        remove_button.attr('value', 'X');
+
+        // Add the remove from order event trigger
+        remove_button.click(removeFromOrder);
+
+        order_element.append(remove_button);
+
+        // Add the edit order item event trigger
+        //order_element.click(editOrderItem);
+
+        // Add the item into the order
+        order_menu.append(order_element);
+
+        // Reset the selection so we can create a new cupcake
+        resetCupcake(undefined);
+
     } else {
         console.log('Something is missing from your order');
     }
@@ -260,9 +324,12 @@ $(document).ready(function () {
     $('.flavor').click(clickFlavor); 
     $('.filling').click(clickFilling);
     $('.icing').click(clickIcing);
+    
     $('#resetCupcakeButton').click(resetCupcake);
     $('#addCupcakeButton').click(addToOrder);
     $('#resetToppingButton').click(resetToppings);
+    $('#saveFavoriteButton').click(addToFavorites);
+    
     $('input[name="toppings"]').change(clickTopping);
 
 });
