@@ -2,6 +2,15 @@
 
 include('api/config.php');
 
+try {
+
+	// Open MySQL PDO Connection
+	$db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASSWORD);
+	$db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+	print 'MySQL PDO Connection Error: ' . $e->getMessage();
+	die();
+}
 
 // Create a hash and a salt for a given password
 // This is used when creating an account

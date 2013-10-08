@@ -1,4 +1,4 @@
-id,onmailinglist,fname,lname,address,city,state,zip_code,email,password,telephone
+UserId,OnMailingList,GivenName,Surname,StreetAddress,City,State,ZipCode,EmailAddress,Password,TelephoneNumber
 1,yes,Bobby,Dickerson,4458 Jett Lane,Pomona,CA,91766,BobbyDDickerson@armyspy.com,oom1duH0quei,310-706-5713
 2,no,John,Horan,814 Marion Street,Brattleboro,VT,5301,JohnMHoran@cuvox.de,uM0zohG5,802-906-9635
 3,yes,Lula,Benjamin,826 Park Boulevard,Casey,IA,50048,LulaTBenjamin@einrot.com,ohF0zooquu1,641-740-3120
