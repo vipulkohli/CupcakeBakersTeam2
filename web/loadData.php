@@ -12,6 +12,54 @@ try {
 	die();
 }
 
+// Create a hash and a salt for a given password
+// This is used when creating an account
+function hashPassword($password) {
+	
+	// 5 rounds of blowfish
+	$Blowfish_Pre = '$2a$05$';
+	$Blowfish_End = '$';
+
+    // allowed blowfish characters
+	$Allowed_Chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789./';
+	$Chars_Len = 63;
+
+	$Salt_Length = 21;
+
+	$salt = "";
+
+	for($i=0; $i < $Salt_Length; $i++)
+	{
+		// Create the salt
+		$salt .= $Allowed_Chars[mt_rand(0,$Chars_Len)];
+	}
+
+	// Create the hash used by the PHP crypt function
+	$bcrypt_salt = $Blowfish_Pre . $salt . $Blowfish_End;
+
+	// Calculate the password hash
+	$hashed_password = crypt($password, $bcrypt_salt);
+
+	// Return the hashed password and the salt
+	return array($hashed_password,$salt);
+}
+
+// Create the hashed password from the salt and user inputted password
+// This is used to verify that the user password hash matches the one from the database
+function hashPasswordWithSalt($password, $salt) {
+	
+	// 5 rounds of blowfish
+	$Blowfish_Pre = '$2a$05$';
+	$Blowfish_End = '$';
+
+	// Use the PHP crpyt function to create the hash for the password
+	$hashed_pass = crypt($password, $Blowfish_Pre . $salt . $Blowfish_End);
+
+	// return the password hash
+	return $hashed_pass;
+}
+
+
 
 $json_input = file_get_contents("resources/data/menu.json");
 $menu = json_decode($json_input,true);
@@ -149,9 +197,12 @@ if (($handle = fopen("resources/data/CustomCupcakesDBData-Users.csv", "r")) !== 
 
 			$date_created = date("Y-m-d H:i:s");
 
-			// TODO: Hash password
-			$hashed_password = '';
-			$salt = '';
+
+
+			// Calculate the password hash and salt
+	        $hashResult = hashPassword($password);
+	        $hashed_password = $hashResult[0];
+	        $salt = $hashResult[1];
 
 			try {
 
