@@ -27,6 +27,7 @@ if (!isset($_SESSION['id']))
 
 <head>
 	<title>Custom Cupcakes | Create Order</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
@@ -45,38 +46,145 @@ if (!isset($_SESSION['id']))
 
 	</header>
 
-	<h2>Create a Custom Cupcake Order</h2>
+	<div id="createOrderContainer">
+		<h2>Create a Custom Cupcake Order</h2>
 
-	<div id="flavorsMenu" class="scrollable">
+		<form action="#" method="post">
 
-	<ul>
-
-	<?php
+			<div id="flavorsMenu">
+				<h3>Select a cupcake flavor</h3>
+				<ul>
+					<?php
 
 	// CREATE THE FLAVOR CHOICESE USING THE REST API
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/flavors');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		$response = curl_exec($ch);
-		curl_close($ch);
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/flavors');
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+					curl_setopt($ch, CURLOPT_HEADER, FALSE);
+					$response = curl_exec($ch);
+					curl_close($ch);
 
-		$responseObj = json_decode($response,true);
+					$responseObj = json_decode($response,true);
 
-		foreach ($responseObj as $flavor) {
+					foreach ($responseObj as $flavor) {
 			//echo ("<li class='flavor selected' >");
-			echo ("<li class='flavor' >");
-			echo ("<img src='resources/artwork/" . $flavor['img_url'] . "' alt='" . $flavor['name'] . "' />");
-			echo ("<p>" . $flavor['name'] . "</p>");
-			echo ("</li>");
-		}
+						echo ("<li class='cupcakeOption' >");
+						echo ("<img src='resources/artwork/" . $flavor['img_url'] . "' alt='" . $flavor['name'] . "' />");
+						echo ("<p>" . $flavor['name'] . "</p>");
+						echo ("</li>");
+					}
 
-	?>
+					?>
 
-	</ul>
+				</ul>
+			</div>
+
+
+
+
+
+
+
+
+
+			<div id="icingsMenu" >
+				<h3>Select an icing flavor</h3>
+				<ul>
+
+					<?php
+
+	// CREATE THE ICING CHOICESE USING THE REST API
+
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/icings');
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+					curl_setopt($ch, CURLOPT_HEADER, FALSE);
+					$response = curl_exec($ch);
+					curl_close($ch);
+
+					$responseObj = json_decode($response,true);
+
+					foreach ($responseObj as $icing) {
+						echo ("<li class='cupcakeOption' >");
+						echo ("<img src='resources/artwork/" . $icing['img_url'] . "' alt='" . $icing['name'] . "' />");
+						echo ("<p>" . $icing['name'] . "</p>");
+						echo ("</li>");
+					}
+
+					?>
+
+				</ul>
+			</div>
+
+
+
+
+
+
+			<div id="fillingsMenu" >
+				<h3>Select a filling flavor</h3>
+				<ul>
+
+					<?php
+
+	// CREATE THE FILLING CHOICESE USING THE REST API
+
+					$ch = curl_init();
+					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/fillings');
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+					curl_setopt($ch, CURLOPT_HEADER, FALSE);
+					$response = curl_exec($ch);
+					curl_close($ch);
+
+					$responseObj = json_decode($response,true);
+
+					foreach ($responseObj as $filling) {
+						echo ("<li class='cupcakeOption' >");
+						echo ("<div class='filling' style='background-color: " . $filling['rgb'] . "'></div>");
+						echo ("<p>" . $filling['name'] . "</p>");
+						echo ("</li>");
+					}
+
+					?>
+
+				</ul>
+			</div>
+
+
+
+			<h3>Select your toppings</h3>
+			<div id="toppingsMenu" >
+				<?php
+
+// CREATE THE TOPPING CHOICES USING THE REST API
+
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/toppings');
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+				curl_setopt($ch, CURLOPT_HEADER, FALSE);
+				$response = curl_exec($ch);
+				curl_close($ch);
+
+				$responseObj = json_decode($response,true);
+
+				foreach ($responseObj as $filling) {
+
+					echo ("<div class='toppingContainer'>");
+					echo ("<input type='checkbox' name='toppings' value='" . $filling['name'] . "' id='" . $filling['name'] . "' />");
+					echo ("<label for='" . $filling['name'] . "'>" . $filling['name'] . "</label>");
+					echo ("</div>");
+
+				}
+
+				?>
+
+			</div>
+		</form>
 	</div>
 
+	<footer>
+		Custom Cupcakes (2013)
+	</footer>
 </body>
-
 </html>

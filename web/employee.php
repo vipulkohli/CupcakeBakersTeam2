@@ -35,7 +35,9 @@ if (!isEmployee())
 	<script src="js/DisplayCharts.js" type="text/javascript"></script>
 	<script src="js/knockout-2.2.1.js"></script>
 	<script src="js/globalize.min.js"></script>
-	<script src="js/dx.chartjs.js"></script>	
+	<script src="js/dx.chartjs.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/style.css">	
 
 	<title>Custom Cupcake | Analytics</title>
 
