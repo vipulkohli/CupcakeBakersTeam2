@@ -86,7 +86,7 @@ function addToppings(&$cupcake,$db) {
 		$cupcake_id = $cupcake['id'];
 
 		// The MySQL Query to get the topping information
-		$sth = $db->prepare("SELECT * FROM cupcake_toppings JOIN toppings ON(cupcake_toppings.topping_id = toppings.id) WHERE cupcake_id=:cupcake_id");
+		$sth = $db->prepare("SELECT name,toppings.id FROM cupcake_toppings JOIN toppings ON(cupcake_toppings.topping_id = toppings.id) WHERE cupcake_id=:cupcake_id");
 		$sth->bindParam(':cupcake_id',$cupcake_id);
 		$sth->execute();
 		
