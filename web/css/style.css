@@ -145,6 +145,26 @@ footer {
 	margin-right: 2em;
 }
 
+#orderMenu {
+	position: fixed;
+	top: 10em;
+	width: 12%;
+	height: 75%;
+	overflow-x: hidden;
+	border: 3px solid black;
+}
+
+#favoritesMenu {
+	position: fixed;
+	top: 10em;
+	right: 0em;
+	left: auto;
+	width: 12%;
+	height: 75%;
+	overflow-x: hidden;
+	border: 3px solid black;
+}
+
 #createOrderContainer {
 	clear: both;
 	width: 70%;

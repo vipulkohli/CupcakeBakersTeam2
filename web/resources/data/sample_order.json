@@ -1,0 +1,24 @@
+{ "order" : { "cupcakes" : [ { "filling" : "c",
+            "flavor" : "a",
+            "frosting" : "b",
+            "quantity" : 4,
+            "toppings" : [ "t1",
+                "t2",
+                "t3"
+              ]
+          },
+          { "filling" : "",
+            "flavor" : "d",
+            "frosting" : "value",
+            "quantity" : 3,
+            "toppings" : [ "t1",
+                "t2"
+              ]
+          },
+          { "filling" : "g",
+            "flavor" : "d",
+            "frosting" : "kapa",
+            "quantity" : 5,
+            "toppings" : [ "t1","t4" ]
+          }
+        ] } }

@@ -48,6 +48,18 @@ if (!isset($_SESSION['id']))
 
 	</header>
 
+	
+	<div id="favoritesMenu">
+		Favorites Data:
+		</div>
+
+		<div id="orderMenu">
+	Order Menu:
+
+		<div class="orderItem" style="width: 50%; height=10em; margin-left: auto; margin-right:auto; background-color:red;">
+		CUPCAKE 1</div>
+	</div>
+
 	<div id="createOrderContainer">
 		<h2>Create a Custom Cupcake Order</h2>
 
@@ -171,10 +183,6 @@ if (!isset($_SESSION['id']))
 			<input type="reset" id ="resetCupcakeButton" value="Reset Current Cupcake" />
 			<input type="submit" value="Submit Order" />
 		</form>
-
-		<div id="favoritesMenu">
-		Favorites Data:
-		</div>
 		
 	</div>
 

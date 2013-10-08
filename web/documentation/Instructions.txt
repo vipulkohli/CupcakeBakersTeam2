@@ -1,0 +1,6 @@
+Add the following lines to: /etc/php5/apache2/php.ini
+extension=pdo.so
+extension=pdo_mysql.so
+
+Then run the following command to restart apache:
+sudo service apache2 restart
