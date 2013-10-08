@@ -101,6 +101,32 @@ function addToppings(&$cupcake,$db) {
 	}
 }
 
+// Used when retrieving a user's "favorite" cupcakes
+function addCupcake(&$favorite,$db) {
+	try {
+		
+
+		// Get the cupcake id used to join the tables
+		$cupcake_id = $favorite['cupcake_id'];
+
+		// The MySQL Query to get the topping information
+		$sth = $db->prepare("SELECT * FROM cupcakes WHERE id=:cupcake_id");
+		$sth->bindParam(':cupcake_id',$cupcake_id);
+		$sth->execute();
+		
+		// Get the topping data
+		$cupcake_data = $sth->fetch(PDO::FETCH_ASSOC);
+
+		addToppings($cupcake_data,$db);
+
+		// Add the topping data to the cupcake object
+		$favorite['cupcake'] = $cupcake_data;
+
+	} catch(PDOException $e) {
+     // SQL ERROR
+	}
+}
+
 ///////////////////////////////////////
 //  CREATE THE REST API METHODS HERE //
 ///////////////////////////////////////
@@ -292,7 +318,7 @@ $app->get(
 		try {
 
 			// Select all of the users's "favorite" cupcakes
-			$sth = $db->prepare('SELECT * FROM favorites WHERE user_id=:user_id');
+			$sth = $db->prepare('SELECT * FROM favorites WHERE user_id=:user_id ');
 			$sth->bindParam(':user_id',$id);
 			$sth->execute();
 
@@ -301,10 +327,10 @@ $app->get(
 
 			foreach ($favorites_data as &$favorite) {
 
-				// Add topping information to each cupcake
+				// Add cupcake/topping information to each cupcake
 
 				// Pass the object by reference so we can add infomration to it
-				addToppings($favorite,$db);
+				addCupcake($favorite,$db);
 			}
 
 		} catch(PDOException $e) {

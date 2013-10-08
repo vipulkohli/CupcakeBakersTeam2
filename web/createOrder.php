@@ -195,6 +195,7 @@ if (!isset($_SESSION['id']))
 				
 
 			<input type="reset" id ="resetCupcakeButton" value="Reset Current Cupcake" />
+			<input type="button" id ="addCupcakeButton" value="Add to Order" />
 			<input type="submit" value="Submit Order" />
 		</form>
 		
