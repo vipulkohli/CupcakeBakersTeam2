@@ -24,6 +24,11 @@ input {
 	font-size: 14px;
 }
 
+div.error,label.error {
+	color: red;
+	display: block;
+}
+
 input[type="text"],input[type="password"],input[type="number"],input[type="email"],input[type="telephone"],select {
 	display:block;
 	width: 20em;
@@ -97,7 +102,7 @@ header h1 {
 	margin-top: 2em;
 	margin-bottom: 2em;
 	padding: 2em;
-	width: 30em;
+	width: 35em;
 
 	border: 3px solid #805841;
 	-webkit-border-radius: 10px;
@@ -138,7 +143,7 @@ footer {
 
 #createOrderContainer {
 	clear: both;
-	width: 80%;
+	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
 }

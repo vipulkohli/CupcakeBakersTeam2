@@ -225,7 +225,10 @@ $app->post(
 
         } catch(PDOException $e) {
         	$success = false;
-        	$reason = $e->getMessage();
+
+        	if (strpos($e->getMessage(),'Duplicate entry')) {
+        		$reason = "An account with this email already exists";
+        	}
         }
 
         // Create the response data

@@ -1,32 +1,3 @@
-<?php
-
-function isEmployee() {
-
-	// SMU's IP Address Range
-	$smu_min_ip = ip2long('129.119.0.0');
-    $smu_max_ip = ip2long('129.119.255.255');
-
-    // Client's IP Address
-	$ip_address = $_SERVER['REMOTE_ADDR'];
-    $long_ip = ip2long($ip_address);
-    
-    // Check if IP address is in SMU's range
-    if ($long_ip <= $smu_max_ip && $long_ip >= $smu_min_ip) {
-    	return true;
-    }
-
-    return false;	
-}
-
-
-if (!isEmployee())
-{
-	// Only allow people in the SMU IP Address Range to view the analytics screen
-	//header('Location: index.php');
-}
-
-?>
-
 <!DOCTYPE html>
 <html>
 <head>

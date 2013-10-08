@@ -27,6 +27,8 @@ if (!isset($_SESSION['id']))
 
 <head>
 	<title>Custom Cupcakes | Create Order</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="js/orderManager.js" type="text/javascript"></script>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
@@ -56,7 +58,7 @@ if (!isset($_SESSION['id']))
 				<ul>
 					<?php
 
-	// CREATE THE FLAVOR CHOICESE USING THE REST API
+	// CREATE THE FLAVOR CHOICES USING THE REST API
 
 					$ch = curl_init();
 					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/flavors');
@@ -68,7 +70,6 @@ if (!isset($_SESSION['id']))
 					$responseObj = json_decode($response,true);
 
 					foreach ($responseObj as $flavor) {
-			//echo ("<li class='flavor selected' >");
 						echo ("<li class='cupcakeOption' >");
 						echo ("<img src='resources/artwork/" . $flavor['img_url'] . "' alt='" . $flavor['name'] . "' />");
 						echo ("<p>" . $flavor['name'] . "</p>");
@@ -80,21 +81,13 @@ if (!isset($_SESSION['id']))
 				</ul>
 			</div>
 
-
-
-
-
-
-
-
-
 			<div id="icingsMenu" >
 				<h3>Select an icing flavor</h3>
 				<ul>
 
 					<?php
 
-	// CREATE THE ICING CHOICESE USING THE REST API
+	// CREATE THE ICING CHOICES USING THE REST API
 
 					$ch = curl_init();
 					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/icings');
@@ -117,18 +110,13 @@ if (!isset($_SESSION['id']))
 				</ul>
 			</div>
 
-
-
-
-
-
 			<div id="fillingsMenu" >
 				<h3>Select a filling flavor</h3>
 				<ul>
 
 					<?php
 
-	// CREATE THE FILLING CHOICESE USING THE REST API
+	// CREATE THE FILLING CHOICES USING THE REST API
 
 					$ch = curl_init();
 					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/fillings');
@@ -150,8 +138,6 @@ if (!isset($_SESSION['id']))
 
 				</ul>
 			</div>
-
-
 
 			<h3>Select your toppings</h3>
 			<div id="toppingsMenu" >
@@ -180,7 +166,15 @@ if (!isset($_SESSION['id']))
 				?>
 
 			</div>
+
+			<input type="reset" value="Reset Current Cupcake" />
+			<input type="submit" value="Submit Order" />
 		</form>
+
+		<div id="favoritesMenu">
+		Favorites Data:
+		</div>
+		
 	</div>
 
 	<footer>

@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 		}
 		else
 		{
-			$err[]='Wrong username and/or password!';	
+			$err[]='Invalid email/password.';	
 		}
 		
 		if($err)
@@ -103,7 +103,6 @@ if (isset($_POST['submit'])) {
 		}
 		else
 		{
-			$err[]='Could not create account';
 			$err[]=$responseObj['reason'];
 		}
 
@@ -133,6 +132,10 @@ if (isset($_SESSION['id']))
 
 <head>
 	<title>Custom Cupcakes</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="js/validateInput.js" type="text/javascript"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
@@ -155,7 +158,10 @@ if (isset($_SESSION['id']))
 			}
 			?> 
 
-			<form method="POST" action="index.php">
+			<div id="login_error" class="error">
+			</div>
+
+			<form id="loginForm" method="POST" action="index.php">
 				<input type="email" name="email" placeholder="Email Address" required autocomplete="on" />
 				<input type="password" name="password" placeholder="Password" required autocomplete="on" />
 				<input type="submit" name="submit" value="Log in" />
@@ -183,6 +189,9 @@ if (isset($_SESSION['id']))
 		}
 		?> 
 
+		<div id="register_error" class="error">
+		</div>
+
 		
 		<form id="registerForm" method="POST" action="index.php">
 
@@ -192,14 +201,14 @@ if (isset($_SESSION['id']))
 			<input type="radio" name="join_mailing_list" id="join_mailing_list_no" value="false" />
 			<label for="join_mailing_list_no">No</label>
 
-			<input type="text" name="first_name" placeholder="First Name" required autocomplete="on" />
-		    <input type="text" name="last_name" placeholder="Last Name" required autocomplete="on" />
+			<input type="text" name="first_name" placeholder="First Name" title="Please enter your first name" required autocomplete="on" />
+		    <input type="text" name="last_name" placeholder="Last Name" title="Please enter your last name" required autocomplete="on" />
 			
 			<input type="email" name="email" placeholder="Email Address" required autocomplete="on" title="Please enter a valid email address" />			
-			<input type="password" name="password" placeholder="Password" pattern="^.{8,}$" title="Password must be at least 8 characters" required autocomplete="on" />
+			<input type="password" name="password" placeholder="Password" title="Password must be at least 8 characters" required autocomplete="on" />
 			
 			<!-- TODO: Use JS to strip all non-digits and verify that there are 10 digits present -->
-			<input type="telephone" name="telephone" placeholder="Telephone Number" title="10 digits exactly" pattern="^.{10,}$" required autocomplete="on" />
+			<input type="telephone" name="telephone" placeholder="Telephone Number" title="Please enter a valid 10-digit phone number" required autocomplete="on" />
 			
 			<input type="text" name="address" placeholder="Address" required autocomplete="on" />
 			<input type="text" name="city" placeholder="City" required autocomplete="on" />
