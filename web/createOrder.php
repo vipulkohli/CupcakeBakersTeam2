@@ -50,14 +50,28 @@ if (!isset($_SESSION['id']))
 
 	
 	<div id="favoritesMenu">
-		Favorites Data:
+		Favorite Designs:
 		</div>
 
 		<div id="orderMenu">
 	Order Menu:
 
-		<div class="orderItem" style="width: 50%; height=10em; margin-left: auto; margin-right:auto; background-color:red;">
-		CUPCAKE 1</div>
+		<div class="orderItem">
+		<img src="resources/artwork/cupcake_icon.png" />
+		<label>
+		Banana [2]
+		</label>
+		<input type="button" value="X" />
+		</div>
+
+		<div class="orderItem">
+		<img src="resources/artwork/cupcake_icon.png" />
+		<label>
+		Cranberry [3]
+		</label>
+		<input type="button" value="X" />
+		</div>
+
 	</div>
 
 	<div id="createOrderContainer">
@@ -141,7 +155,7 @@ if (!isset($_SESSION['id']))
 
 					foreach ($responseObj as $filling) {
 						echo ("<li class='cupcakeOption filling' >");
-						echo ("<div class='filling' style='background-color: " . $filling['rgb'] . "'></div>");
+						echo ("<div class='fillingColor' style='background-color: " . $filling['rgb'] . "'></div>");
 						echo ("<p>" . $filling['name'] . "</p>");
 						echo ("</li>");
 					}

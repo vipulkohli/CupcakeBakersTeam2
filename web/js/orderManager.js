@@ -1,8 +1,19 @@
 
 function loadFavorites() {
     
-    var favorites_menu = $('#favoritesMenu')[0];
+    var favorites_menu = $('#favoritesMenu');
 
+
+/*
+
+        <div class="orderItem">
+        <img src="resources/artwork/cupcake_icon.png" />
+        <label>
+        Cranberry [3]
+        </label>
+        <input type="button" value="X" />
+        </div>
+        */
 
     var request = new XMLHttpRequest();
     request.open("GET","http://localhost/cupcakes/api/index.php/users/1/favorites",true);
@@ -11,8 +22,24 @@ function loadFavorites() {
            
             var favorites_data = JSON.parse(request.responseText);
 
-            favorites_menu.innerHTML += request.responseText;
+            for (var i = 0; i < favorites_data.length; i++) {
+                var favorite_data = favorites_data[i];
 
+                var favorite_element = $(document.createElement('div'));
+                favorite_element.addClass('favoriteItem');
+                favorite_element.append("<img src='resources/artwork/cupcake_icon.png' />");
+                
+                var label = $(document.createElement('label'));
+                //label.append(favorites_data['name']);
+                label.append('FAVORITE CHOCOLATE');
+
+                favorite_element.append(label);
+
+                favorites_menu.append(favorite_element);
+                //console.log(favorite_element);
+                //favorites_menu.append(favorite_element);
+
+            }
         }
     }
     request.send();

@@ -78,7 +78,7 @@ function hashPasswordWithSalt($password, $salt) {
 
 // Uses a JOIN query to add the topping data to a cupcake object
 // Used when retrieving a user's "favorite" cupcakes
-function addToppings($cupcake,$db) {
+function addToppings(&$cupcake,$db) {
 	try {
 		
 
@@ -304,7 +304,7 @@ $app->get(
 				// Add topping information to each cupcake
 
 				// Pass the object by reference so we can add infomration to it
-				addToppings(&$favorite,$db);
+				addToppings($favorite,$db);
 			}
 
 		} catch(PDOException $e) {
