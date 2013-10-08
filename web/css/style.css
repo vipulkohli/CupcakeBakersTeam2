@@ -151,18 +151,22 @@ footer {
 	width: 12%;
 	height: 75%;
 	overflow-x: hidden;
-	border: 3px solid black;
+	border: 3px solid #805841;
+	border-radius: 5px;
+	background-color: #DCF7F3;
 }
 
 #favoritesMenu {
 	position: fixed;
 	top: 10em;
-	right: 0em;
+	right: .5em;
 	left: auto;
 	width: 12%;
 	height: 75%;
 	overflow-x: hidden;
-	border: 3px solid black;
+	border: 3px solid #805841;
+	border-radius: 5px;
+	background-color: #DCF7F3;
 }
 
 #createOrderContainer {
@@ -180,7 +184,7 @@ footer {
 ul {
 	/* Border around the menu */
 	/* Sets a width of 80% and enables the horizontal scrollbar */
-	border: 3px solid black;
+	border: 3px solid #805841;
 	border-radius: 5px;
 	margin: 0;
 	padding: 0;
@@ -193,7 +197,7 @@ ul {
 li {
 	/* Display the cupcake items using inline-block to display the scrollbar */
 	display:inline-block;
-	border: 1px solid black;
+	border: 1px solid #805841;
 }
 
 li p {
@@ -211,20 +215,19 @@ li img {
 	padding: .5em;
 }
 
-.filling {
+.fillingColor {
 	min-width: 100px;
 	height: 100px;
 }
 
 .selected {
-	background-color: red;
-	border: 4px solid red;
+	background-color: #F5A2A2;
 }
 
 
 #toppingsMenu {
 	/* Border around the menu */
-	border: 3px solid black;
+	border: 3px solid #805841;
 	border-radius: 5px;
 	margin: 0;
 	padding: 1em;
@@ -245,6 +248,31 @@ li img {
 	width: 14em;
     display: inline-block;
     margin-right: 3em;
+}
+
+.orderItem, .favoriteItem {
+	border: 1px solid #805841;
+	border-radius: 5px;
+	background-color:#FFFCDD;
+	margin-top: .5em;
+	margin-bottom: .5em;
+	font-size: 14px;
+}
+.orderItem label, .favoriteItem label {
+	display: inline-block;
+}
+.orderItem input[type="button"]:hover {
+	background-color: red;
+}
+
+.orderItem:hover, .favoriteItem:hover {
+	background-color: orange;
+}
+
+.orderItem input[type="button"] {
+float: right;
+height: 1.5em;
+margin-top: .5em
 }
 
 /* EMPLOYEE ANALYTICS PAGE */
