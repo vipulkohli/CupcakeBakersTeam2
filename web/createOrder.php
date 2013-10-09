@@ -64,25 +64,6 @@ if (isset($_POST['submit'])) {
 		<div id="orderMenu">
 	Order Menu:
 
-		<!--
-		<div class="orderItem">
-		<img src="resources/artwork/cupcake_icon.png" />
-		<label>
-		Banana [2]
-		</label>
-		<input type="button" value="X" />
-		</div>
-
-		<div class="orderItem">
-		<img src="resources/artwork/cupcake_icon.png" />
-		<label>
-		Cranberry [3]
-		</label>
-		<input type="button" value="X" />
-		</div>
-
-		-->
-
 	</div>
 
 	<div id="createOrderContainer">
@@ -194,8 +175,8 @@ if (isset($_POST['submit'])) {
 				foreach ($responseObj as $filling) {
 
 					echo ("<div class='toppingContainer'>");
-					echo ("<input type='checkbox' name='toppings' value='" . $filling['name'] . "'' id='" . $filling['name'] . "' />");
-					echo ("<label for='" . $filling['name'] . "'>" . $filling['name'] . "</label>");
+					echo ("<input type='checkbox' name='toppings' value='" . $filling['id'] . "'' id='" . $filling['id'] . "' />");
+					echo ("<label for='" . $filling['id'] . "'>" . $filling['name'] . "</label>");
 					echo ("</div>");
 
 				}
