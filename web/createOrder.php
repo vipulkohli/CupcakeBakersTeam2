@@ -25,6 +25,15 @@ if (isset($_POST['submit'])) {
 
 	// Then redirect to the employee analytics page
 	header('Location: employee.php');
+	exit;
+}
+
+if (isset($_POST['logout'])) {
+
+	session_destroy();
+
+	header('Location: index.php');
+	exit;
 }
 
 
@@ -50,7 +59,7 @@ if (isset($_POST['submit'])) {
 		<div id="logoutContainer" >
 
 			<form method="POST" action="#">
-				<input type="submit" name="submit" value="Log out" />
+				<input type="submit" name="logout" value="Log out" />
 			</form>
 		</div>
 
