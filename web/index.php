@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 
 		//initializing a new curl session
 		$ch = curl_init();
-		//setting the URL we want
+		//setting the URL we want (this will send us to the api function that deals with log in
 		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/login');
 		//setting it so the data gets returned to us instead of displayed
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
