@@ -6,6 +6,7 @@ require_once __DIR__ . '/config.php';
 
 // Include the Slim REST API Framework files
 // This is an open source library created to make REST API's in PHP
+//we will use it as intermediare to redirect to an especific function when an action takes place
 require 'Slim/Slim.php';
 
 try {
@@ -131,7 +132,9 @@ function addCupcake(&$favorite,$db) {
 //  CREATE THE REST API METHODS HERE //
 ///////////////////////////////////////
 
-// VALIDATE A LOGIN
+//app is the slim object greated before. the post ('R', function() use(...) means that everytime a post is doing specifying the route (R) it will perform the function enclose in the curly braces. This stands for all the following times this appears.
+
+//VALIDATE LOGGIN
 $app->post(
 	'/login',
 	function () use ($app,$db) {
@@ -206,27 +209,27 @@ $app->post(
 
 		// Load all of the JSON Request variables
 		$email = $request['email'];
-        $password = $request['password'];
-        $first_name = $request['first_name'];
-        $last_name = $request['last_name'];
-        $date_created = date("Y-m-d H:i:s");
-        $telephone = $request['telephone'];
-        $address = $request['address'];
-        $city = $request['city'];
-        $state = $request['state'];
-        $zip_code = $request['zip_code'];
+	        $password = $request['password'];
+        	$first_name = $request['first_name'];
+       		$last_name = $request['last_name'];
+	        $date_created = date("Y-m-d H:i:s");
+	        $telephone = $request['telephone'];
+	        $address = $request['address'];
+	        $city = $request['city'];
+	        $state = $request['state'];
+	        $zip_code = $request['zip_code'];
 
-        // Calculate the password hash and salt
-        $hashResult = hashPassword($password);
-        $hashed_password = $hashResult[0];
-        $salt = $hashResult[1];
+        	// calling hte function that calculates the password hash and salt
+	        $hashResult = hashPassword($password);
+	        $hashed_password = $hashResult[0];
+	        $salt = $hashResult[1];
 
-        // Init the response variables
-        $success = false;
-        $reason = '';
-        $insert_id = 0;
+	        // Init the response variables
+	        $success = false;
+	        $reason = '';
+	        $insert_id = 0;
 
-        try {
+        	try {
 
         	// Insert the user data into the Users table
         	$sth = $db->prepare('INSERT INTO users (email,first_name,last_name,password,salt,telephone,address,city,state,zip_code,date_created) 
@@ -533,6 +536,7 @@ $app->get(
 	);
 
 // SUBMIT AN ORDER
+//thi method is done outside "newOrder.php"
 $app->post(
 	'/orders',
 	function () use ($app,$db) {
