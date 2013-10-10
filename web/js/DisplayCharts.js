@@ -1,16 +1,6 @@
-
-function get_random_color() {
-	var letters = '0123456789ABCDEF'.split('');
-	var color = '#';
-	for (var i = 0; i < 6; i++ ) {
-		color += letters[Math.round(Math.random() * 15)];
-	}
-	return color;
-}
-
 function loadToppings() {
 	var request = new XMLHttpRequest();
-	request.open("GET","http://localhost/cupcakes/api/index.php/toppings",true);
+	request.open("GET","./api/index.php/toppings",true);
 	request.onreadystatechange = function(e) {
 		if (request.readyState === 4) {
 			var topping_data = JSON.parse(request.responseText);
@@ -45,7 +35,7 @@ function loadToppings() {
 
 function loadFillings() {
 	var request = new XMLHttpRequest();
-	request.open("GET","http://localhost/cupcakes/api/index.php/fillings",true);
+	request.open("GET","./api/index.php/fillings",true);
 	request.onreadystatechange = function(e) {
 		if (request.readyState === 4) {
 			var filling_data = JSON.parse(request.responseText);
@@ -82,7 +72,7 @@ function loadFillings() {
 
 function loadIcings() {
 	var request = new XMLHttpRequest();
-	request.open("GET","http://localhost/cupcakes/api/index.php/icings",true);
+	request.open("GET","./api/index.php/icings",true);
 	request.onreadystatechange = function(e) {
 		if (request.readyState === 4) {
 			var icing_data = JSON.parse(request.responseText);
@@ -119,7 +109,7 @@ function loadIcings() {
 
 function loadFlavors() {
 	var request = new XMLHttpRequest();
-	request.open("GET","http://localhost/cupcakes/api/index.php/flavors",true);
+	request.open("GET","./api/index.php/flavors",true);
 	request.onreadystatechange = function(e) {
 		if (request.readyState === 4) {
 			var flavor_data = JSON.parse(request.responseText);
