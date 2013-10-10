@@ -19,6 +19,8 @@ var totalPrice = 0.0;
 var favorites_data = [];
 var order_data = [];
 
+var selectedOrder = -1;
+
 function loadCupcakeData() {
 
     // Load Flavors
@@ -201,10 +203,8 @@ function resetCupcake(e) {
 // Load a favorite cupcake into the editor from the favorites menu
 function loadFromFavorites() {
     
-    // Label counts as in item in the index
-    var index = $(this).index() - 1;
-    console.log(index);
-
+    var index = $(this).index('.favoriteItem');
+    
     var cupcake_data = favorites_data[index]['cupcake'];
 
     // Reset the selections
@@ -466,7 +466,7 @@ function addToOrder() {
         order_element.append(remove_button);
 
         // Add the edit order item event trigger
-        //order_element.click(editOrderItem);
+        order_element.click(selectOrderItem);
 
         // Add the item into the order
         order_menu.append(order_element);
@@ -534,7 +534,7 @@ function updateTotalPrice() {
     }
 
     $('#totalCost')[0].innerHTML = 'Total Cost: $' + totalPrice.toFixed(2);
-    console.log("Total Cost: " + totalPrice.toFixed(2));
+    //console.log("Total Cost: " + totalPrice.toFixed(2));
 }
 
 function submitOrder() {
@@ -568,6 +568,122 @@ function submitOrder() {
     
 }
 
+function selectOrderItem(e) {
+    
+    deselectOrderItem();
+
+    // Show the item as selected
+    $(this).addClass('orderItemSelected');
+
+    // Get the index of the item
+    selectedOrder = $(this).index('.orderItem');
+
+    // Don't let the deselect event trigger
+    e.stopPropagation();
+
+    // SHOW UPDATE BUTTON
+    $('#updateCupcakeButton').show();
+
+
+    // Reset the selections
+    resetCupcake(undefined);
+
+    ////
+    // Update the UI to show the choices of the order
+    ////
+
+    var currentOrderItem = order_data[selectedOrder];
+
+    // Select flavor according to the favorite data
+    var flavor_index = -1;
+
+    // Get the index of the desired flavor
+    for (var i = 0; i < flavors.length; i++) {
+        if (flavors[i].id == currentOrderItem['flavor_id']) {
+            flavor_index = i;
+        }
+    }
+    //console.log(flavor_index);
+    $( '.flavor' )[flavor_index].click();
+
+
+
+
+    // Select according to the favorite data
+    var icing_index = -1;
+
+    // Get the index of the desired icing
+    for (var i = 0; i < icings.length; i++) {
+        if (icings[i].id == currentOrderItem['icing_id']) {
+            icing_index = i;
+        }
+    }
+
+    //console.log(icing_index);
+    $( '.icing' )[icing_index].click();
+
+
+
+    // Select according to the favorite data
+    var filling_index = -1;
+
+    // Get the index of the desired filling
+    for (var i = 0; i < fillings.length; i++) {
+        if (fillings[i].id == currentOrderItem['filling_id']) {
+            filling_index = i;
+        }
+    }
+
+    //console.log(filling_index);
+    $( '.filling' )[filling_index].click();
+
+
+
+    // Select toppings according to favorite data
+    for (var i = 0; i < currentOrderItem['toppings'].length; i++) {
+
+        for (var j = 0; j < toppings.length; j++) {
+
+            if (toppings[j].id == currentOrderItem['toppings'][i]) {
+                $('input[name="toppings"][value="' + currentOrderItem['toppings'][i] + '"]').click();
+            }
+        }
+   }
+}
+
+function  deselectOrderItem() {
+
+    // Deselect the item
+    $('.orderItem').removeClass('orderItemSelected');
+    selectedOrder = -1;
+
+    // HIDE UPDATE BUTTON
+    $('#updateCupcakeButton').hide();
+
+}
+
+function updateOrderItem() {
+
+    console.log('update itme');
+
+    if (selectedOrder > -1 && selectedOrder < order_data.length) {
+        console.log('update the order item');
+
+        order_data[selectedOrder] =
+        {
+            "flavor_id": flavors[currentFlavor].id,
+            "icing_id": icings[currentIcing].id,
+            "filling_id": fillings[currentFilling].id,
+            "toppings": currentToppings,
+            "quantity": currentQuantity
+        };
+
+        var label = $('.orderItem label')[selectedOrder];
+        label.innerHTML = flavors[currentFlavor].name + ":  " + currentQuantity;
+
+        updateTotalPrice();
+    }
+}
 
 $(document).ready(function () {
 
@@ -597,6 +713,10 @@ $(document).ready(function () {
     $('#submitOrder').click(submitOrder);
     $('input[name="toppings"]').change(clickTopping);
 
+    $('#orderMenu').click(deselectOrderItem);
+
+    $('#updateCupcakeButton').hide();
+    $('#updateCupcakeButton').click(updateOrderItem);
     updateTotalPrice();
 
 });

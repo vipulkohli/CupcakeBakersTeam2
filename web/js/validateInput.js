@@ -13,7 +13,7 @@ $(document).ready(function () {
             }
         },
         submitHandler: function(form) {
-		    form.submit();
+            form.submit();
 		  },
 		  errorPlacement: function(error, element) {
 		  	error.insertBefore(element);

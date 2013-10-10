@@ -11,16 +11,8 @@ session_start();
 
 
 if (isset($_POST['submit'])) {
-	if($_POST['submit'] == 'Log out')
-	{
-		// Destroy the session
-		$_SESSION = array();
-		session_destroy();
-		
-		header("Location: index.php");
-		exit;
-	}
-	else if($_POST['submit'] == 'Log in')
+	
+	if($_POST['submit'] == 'Log in')
 	{
 		// Checking whether the Login form has been submitted
 
@@ -32,35 +24,23 @@ if (isset($_POST['submit'])) {
 			'password' => $_POST['password']
 			);
 
-		//initializing a new curl session
 		$ch = curl_init();
-		//setting the URL we want (this will send us to the api function that deals with log in
 		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/login');
-		//setting it so the data gets returned to us instead of displayed
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		//include header in the output
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		//set it to do regular posts
 		curl_setopt($ch, CURLOPT_POST, TRUE);
-		//settign the http array of header fields
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-		
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request));
-		//gets the just made url and passes to the browser
 		$response = curl_exec($ch);
-		//deletes and releases the memory used 
 		curl_close($ch);
 
-		//decodes the json the url returns
 		$responseObj = json_decode($response,true);
 
-		//if loggin is successful we set up the cookie
 		if($responseObj['success'])
 		{
 			$_SESSION['id'] = $responseObj['user_id'];
 			setcookie('rememberCookie',true);
 		}
-		//otherwise output error
 		else
 		{
 			$err[]='Invalid email/password.';	
@@ -76,7 +56,6 @@ if (isset($_POST['submit'])) {
 		exit;
 
 	}
-	//if someone is creating an account
 	else if($_POST['submit'] == 'Sign Up')
 	{
 		
@@ -101,7 +80,7 @@ if (isset($_POST['submit'])) {
 		// Remove all non-digits from the telephone string using regex
 		$request['telephone'] = preg_replace("/[^0-9]/", '', $request['telephone']);
 
-		// Create the REST API Request (similar process as previous time)
+		// Create the REST API Request
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/users');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);

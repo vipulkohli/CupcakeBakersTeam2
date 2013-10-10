@@ -30,8 +30,10 @@ if (isset($_POST['submit'])) {
 
 if (isset($_POST['logout'])) {
 
+	// Destroy the session
+	$_SESSION = array();
 	session_destroy();
-
+		
 	header('Location: index.php');
 	exit;
 }
@@ -81,12 +83,7 @@ $base_url = $prefix . $domain . dirname($_SERVER['PHP_SELF']);
 
 	?>
 
-	
-	<div id="favoritesMenu">
-		<label>Favorite Designs:</label>
-		</div>
-
-		<div id="orderMenu">
+	<div id="orderMenu">
 		<label>Order Menu:</label>
 
 		<label id="totalCost">Total Cost: $10.00</label>
@@ -213,6 +210,8 @@ $base_url = $prefix . $domain . dirname($_SERVER['PHP_SELF']);
 				
 
 			<input type="reset" id ="resetCupcakeButton" value="Reset Current Cupcake" />
+
+			<input type="button" id ="updateCupcakeButton" value="Update Current Cupcake" />
 			<input type="button" id ="addCupcakeButton" value="Add to Order" />
 			<input type="button" id="saveFavoriteButton" value="Add to Favorites" />
 
@@ -223,6 +222,11 @@ $base_url = $prefix . $domain . dirname($_SERVER['PHP_SELF']);
 		</form>
 		
 	</div>
+
+
+	<div id="favoritesMenu">
+		<label>Favorite Designs:</label>
+	</div>	
 
 	<div id="dialog-modal" title="Add To Favorites">
 	  <form>

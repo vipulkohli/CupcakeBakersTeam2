@@ -277,6 +277,10 @@ li img {
 	background-color: orange;
 }
 
+.orderItemSelected {
+	background-color: orange;
+}
+
 .orderItem input[type="button"] {
 float: right;
 height: 1.5em;

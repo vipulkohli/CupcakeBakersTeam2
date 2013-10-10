@@ -60,7 +60,7 @@ function hashPasswordWithSalt($password, $salt) {
 }
 
 
-//getting the input data from the json source file
+
 $json_input = file_get_contents("resources/data/menu.json");
 $menu = json_decode($json_input,true);
 $menu = $menu['menu'];
@@ -69,7 +69,6 @@ $cakes = $menu['cakes'];
 
 echo 'Inserting Flavors.' . '<br />';
 
-//inserting each cupcake flavor option with its image from the source input file to the database
 foreach ($cakes as $cake) {
 	$flavor = $cake['flavor'];
 	$img_url = $cake['img_url'];
@@ -89,7 +88,6 @@ foreach ($cakes as $cake) {
 	}
 }
 
-//inserting the icing options from the input files to the database
 echo '<br />' . 'Inserting Icings.' . '<br />';
 
 $frostings = $menu['frosting'];
@@ -113,7 +111,6 @@ foreach ($frostings as $frosting) {
 	}
 }
 
-//inserting the filling options snd their images inthe database
 echo '<br />' . 'Inserting Fillings.' . '<br />';
 
 $fillings = $menu['fillings'];
@@ -138,7 +135,6 @@ foreach ($fillings as $filling) {
 
 }
 
-//inserting the toppings from the input files ot the database 
 echo '<br />' . 'Inserting Toppings.' . '<br />';
 
 $toppings = $menu['Toppings'];
@@ -159,12 +155,9 @@ foreach ($toppings as $topping) {
 	}
 }
 
-//inserting the users in the input file in to the database
-//this information is in a csv file, not json
 echo '<br />' . 'Inserting Users.' . '<br />';
 
 $row = 0;
-//opening the file
 if (($handle = fopen("resources/data/CustomCupcakesDBData-Users.csv", "r")) !== FALSE) {
 	while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 		$num = count($data);
@@ -246,7 +239,6 @@ if (($handle = fopen("resources/data/CustomCupcakesDBData-Users.csv", "r")) !== 
 	fclose($handle);
 }
 
-//inserting the favourites options form the csv input file
 echo '<br />' . 'Inserting Favorites.' . '<br />';
 
 
@@ -283,7 +275,7 @@ if (($handle = fopen("resources/data/CustomCupcakesDBData-FavoriteCupcakes.csv",
         	try {
 
 
-				// Get the cupcake_id by inserting into cupcakes. the database will give it an id, when it is created
+				// Get the cupcake_id by inserting into cupcakes
         		$sth = $db->prepare('INSERT INTO cupcakes
         			(icing_id,flavor_id,filling_id,quantity) 
         			VALUES
@@ -309,7 +301,6 @@ if (($handle = fopen("resources/data/CustomCupcakesDBData-FavoriteCupcakes.csv",
 
         	} catch (PDOException $e) {
         		if (strpos($e->getMessage(),'Duplicate entry') !== false) {
-				//this eco statements are more debuggin, and make sure that no favourite was skiped
         			echo 'Skipping Favorite Cupcake' . '<br />';
         		} else {
         			echo 'Filling ID: ' . $filling_id . '<br />';
@@ -323,8 +314,8 @@ if (($handle = fopen("resources/data/CustomCupcakesDBData-FavoriteCupcakes.csv",
 }
 
 
-//adding the favourite toppings to the database
 echo '<br />' . 'Inserting Favorite Toppings.' . '<br />';
+
 
 $row = 0;
 
@@ -372,7 +363,6 @@ if (($handle = fopen("resources/data/CustomCupcakesDBData-ToppingsBridge.csv", "
         		$sth->execute();
 
         	} catch (PDOException $e) {
-			//if the topping had already being enter
         		if (strpos($e->getMessage(),'Duplicate entry') !== false) {
         			echo 'Skipping Favorite Toppings' . '<br />';
         		} else {
