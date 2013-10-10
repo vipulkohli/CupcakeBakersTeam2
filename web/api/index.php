@@ -352,8 +352,12 @@ $app->post(
 
 		$request = $app->request()->getBody();
 
-		// Get the cupcake's id
-		$cupcake_id = $request['cupcake_id'];
+		$name = $request['name'];
+		$flavor_id = $request['cupcake']['flavor_id'];
+		$filling_id = $request['cupcake']['filling_id'];
+		$icing_id = $request['cupcake']['icing_id'];
+		$toppings = $request['cupcake']['toppings'];
+		$quantity = 1;
 
 		// Init the response variable
 		$success = false;
@@ -362,7 +366,39 @@ $app->post(
 
 		try {
 
-            // INSERT THE FAVORITE
+			// INSERT THE FAVORITE
+			$sth = $db->prepare('INSERT INTO cupcakes 
+				(flavor_id,filling_id,icing_id,quantity) 
+				VALUES 
+				(:flavor_id,:filling_id,:icing_id,:quantity)');
+
+			$sth->bindParam(':flavor_id', $flavor_id);
+			$sth->bindParam(':filling_id', $filling_id);
+			$sth->bindParam(':icing_id', $icing_id);
+			$sth->bindParam(':quantity', $quantity);
+
+			$sth->execute();
+
+			$cupcake_id = $db->lastInsertId();
+
+			foreach ($toppings as $topping) {
+
+				// Insert the cupcake toppings
+				$topping_id = $topping['id'];
+
+				$sth = $db->prepare('INSERT INTO cupcake_toppings 
+				(cupcake_id,topping_id) 
+				VALUES 
+				(:cupcake_id,:topping_id)');
+
+				$sth->bindParam(':cupcake_id', $cupcake_id);
+				$sth->bindParam(':topping_id', $topping_id);
+		
+				$sth->execute();
+			}
+
+
+            // INSERT THE INTO FAVORITES
 			$sth = $db->prepare('INSERT INTO favorites (user_id,cupcake_id) 
 				VALUES (:user_id,:cupcake_id)');
 
@@ -391,7 +427,7 @@ $app->post(
         $response = $app->response();
         $response['Content-Type'] = 'application/json';
         $response->status(200);
-        $response->write(json_encode($dataArray,JSON_NUMERIC_CHECK));
+        $response->write(json_encode($dataArray));
 
     }
     );
@@ -496,16 +532,116 @@ $app->get(
 	}
 	);
 
-// TODO
 // SUBMIT AN ORDER
 $app->post(
 	'/orders',
 	function () use ($app,$db) {
 
-		// TODO:
-		// submit the order
-		// update the quantity_ordered for each component
+		$request = $app->request()->getBody();
+
+		$user_id = $request['user_id'];
+		$total_price = $request['total_price'];
+	
+		// Init the response variable
+		$success = false;
+		$reason = '';
+		$insert_id = 0;
+
+		try {
+
+			// INSERT A NEW ORDER
+			$sth = $db->prepare('INSERT INTO orders (user_id,total_price) VALUES (:user_id,:total_price)');
+			$sth->bindParam(':user_id', $user_id);
+			$sth->bindParam(':total_price', $total_price);
+			$sth->execute();
+
+			$order_id = $db->lastInsertId();
+			$insert_id = $order_id;
+
+			$cupcakes = $request['cupcakes'];
+
+			foreach ($cupcakes as $cupcake) {
+				$flavor_id = $cupcake['flavor_id'];
+				$filling_id = $cupcake['filling_id'];
+				$icing_id = $cupcake['icing_id'];
+				$toppings = $cupcake['toppings'];
+				$quantity = $cupcake['quantity'];
+				
+
+				// INSERT THE CUPCAKE
+				$sth = $db->prepare('INSERT INTO cupcakes 
+					(flavor_id,filling_id,icing_id,quantity,order_id) 
+					VALUES 
+					(:flavor_id,:filling_id,:icing_id,:quantity,:order_id)');
+
+				$sth->bindParam(':flavor_id', $flavor_id);
+				$sth->bindParam(':filling_id', $filling_id);
+				$sth->bindParam(':icing_id', $icing_id);
+				$sth->bindParam(':quantity', $quantity);
+				$sth->bindParam(':order_id', $order_id);
+
+				$sth->execute();
+
+				$cupcake_id = $db->lastInsertId();
+
+				// INSERT THE TOPPINGS
+				foreach ($toppings as $topping) {
+
+					$topping_id = $topping['id'];
+
+					$sth = $db->prepare('INSERT INTO cupcake_toppings (cupcake_id,topping_id) VALUES (:cupcake_id,:topping_id)');
+					$sth->bindParam(':cupcake_id', $cupcake_id);
+					$sth->bindParam(':topping_id', $topping_id);
+					$sth->execute();
+
+					// UPDATE THE QUANTITES
+					$sth = $db->prepare('UPDATE toppings SET quantity_sold=quantity_sold+:quantity WHERE id=:topping_id');
+					$sth->bindParam(':quantity', $quantity);
+					$sth->bindParam(':topping_id', $topping_id);
+					$sth->execute();
+
+				}
+
+				// UPDATE THE QUANTITES
+				$sth = $db->prepare('UPDATE flavors SET quantity_sold=quantity_sold+:quantity WHERE id=:flavor_id');
+				$sth->bindParam(':quantity', $quantity);
+				$sth->bindParam(':flavor_id', $flavor_id);
+				$sth->execute();
+
+				$sth = $db->prepare('UPDATE fillings SET quantity_sold=quantity_sold+:quantity WHERE id=:filling_id');
+				$sth->bindParam(':quantity', $quantity);
+				$sth->bindParam(':filling_id', $filling_id);
+				$sth->execute();
+
+				$sth = $db->prepare('UPDATE icings SET quantity_sold=quantity_sold+:quantity WHERE id=:icing_id');
+				$sth->bindParam(':quantity', $quantity);
+				$sth->bindParam(':icing_id', $icing_id);
+
+				$sth->execute();
+			}
+           
+            $success = true;
+
+        } catch(PDOException $e) {
+        	$success = false;
+        	$reason = $e->getMessage();
+        }
+
+        // Create the response data
+        $dataArray = array(
+        	'success' => $success,
+        	'reason' => $reason,
+        	'insert_id' => $insert_id);
+        
+
+        // Send the JSON response
+        $response = $app->response();
+        $response['Content-Type'] = 'application/json';
+        $response->status(200);
+        $response->write(json_encode($dataArray));
 		
 		});
+
+
 // Run the Slim app
 $app->run();

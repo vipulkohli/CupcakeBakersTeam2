@@ -1,24 +1,40 @@
-{ "order" : { "cupcakes" : [ { "filling" : "Blackberry",
-              "flavor" : "Grape",
-             "frosting" : "Vanilla Rose",             
-             "favorite" : "",             
-             "quantity" : 1,             
-             "toppings" : [ "Bacon","Sprinkles","Oreo Bits"]
-             },           
-             { "filling" : "Blackberry",
-              "flavor" : "Grape",             
-              "frosting" : "Creme Cheese",             
-              "favorite" : "The Bomb",             
-              "quantity" : 3,             
-              "toppings" : [ "Bacon","Twix Bits"]           
-              },           
-              { "filling" : "No Filling",             
-              "flavor" : "Milk Chocolate",             
-              "frosting" : "Chocolate",             
-              "favorite" : "Cupcake Royale",             
-              "quantity" : 5,             
-              "toppings" : [ "Bacon","Skittles" ]           
-              }         
-              ] 
-      } 
+{
+   "order":{
+      "cupcakes":[
+         {
+            "filling":"Blackberry",
+            "flavor":"Grape",
+            "frosting":"Vanilla Rose",
+            "favorite":"",
+            "quantity":1,
+            "toppings":[
+               "Bacon",
+               "Sprinkles",
+               "Oreo Bits"
+            ]
+         },
+         {
+            "filling":"Blackberry",
+            "flavor":"Grape",
+            "frosting":"Creme Cheese",
+            "favorite":"The Bomb",
+            "quantity":3,
+            "toppings":[
+               "Bacon",
+               "Twix Bits"
+            ]
+         },
+         {
+            "filling":"No Filling",
+            "flavor":"Milk Chocolate",
+            "frosting":"Chocolate",
+            "favorite":"Cupcake Royale",
+            "quantity":5,
+            "toppings":[
+               "Bacon",
+               "Skittles"
+            ]
+         }
+      ]
+   }
 }

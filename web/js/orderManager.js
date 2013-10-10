@@ -1,6 +1,8 @@
 
 
 
+var userId = -1;
+
 var flavors;
 var icings;
 var fillings;
@@ -10,16 +12,18 @@ var currentFlavor = -1;
 var currentIcing = -1;
 var currentFilling = -1;
 var currentToppings = [];
+var currentQuantity = 1;
+
+var totalPrice = 0.0;
 
 var favorites_data = [];
 var order_data = [];
-
 
 function loadCupcakeData() {
 
     // Load Flavors
     var flavorRequest = new XMLHttpRequest();
-    flavorRequest.open("GET","http://localhost/cupcakes/api/index.php/flavors",true);
+    flavorRequest.open("GET","./api/index.php/flavors",true);
     flavorRequest.onreadystatechange = function(e) {
         if (flavorRequest.readyState === 4) {
 
@@ -30,7 +34,7 @@ function loadCupcakeData() {
 
     // Load Icings
     var icingRequest = new XMLHttpRequest();
-    icingRequest.open("GET","http://localhost/cupcakes/api/index.php/icings",true);
+    icingRequest.open("GET","./api/index.php/icings",true);
     icingRequest.onreadystatechange = function(e) {
         if (icingRequest.readyState === 4) {
 
@@ -39,8 +43,9 @@ function loadCupcakeData() {
     }
     icingRequest.send();
 
+    // Load Fillings
     var fillingRequest = new XMLHttpRequest();
-    fillingRequest.open("GET","http://localhost/cupcakes/api/index.php/fillings",true);
+    fillingRequest.open("GET","./api/index.php/fillings",true);
     fillingRequest.onreadystatechange = function(e) {
         if (fillingRequest.readyState === 4) {
 
@@ -49,8 +54,9 @@ function loadCupcakeData() {
     }
     fillingRequest.send();
 
+    // Load Toppings
     var toppingRequest = new XMLHttpRequest();
-    toppingRequest.open("GET","http://localhost/cupcakes/api/index.php/toppings",true);
+    toppingRequest.open("GET","./api/index.php/toppings",true);
     toppingRequest.onreadystatechange = function(e) {
         if (toppingRequest.readyState === 4) {
 
@@ -61,17 +67,19 @@ function loadCupcakeData() {
 }
 
 
+// Load all favorites using REST API
 function loadFavorites() {
 
     var favorites_menu = $('#favoritesMenu');
 
     var request = new XMLHttpRequest();
-    request.open("GET","http://localhost/cupcakes/api/index.php/users/1/favorites",true);
+    request.open("GET","./api/index.php/users/" + userId + "/favorites",true);
     request.onreadystatechange = function(e) {
         if (request.readyState === 4) {
 
             favorites_data = JSON.parse(request.responseText);
 
+            // Insert each favorite into the menu
             for (var i = 0; i < favorites_data.length; i++) {
                 var favorite_data = favorites_data[i];
 
@@ -99,10 +107,9 @@ function loadFavorites() {
                 }
 
                 favorite_element.append(label);
-
                 favorite_element.click(loadFromFavorites);
-
                 favorites_menu.append(favorite_element);
+                
                 //console.log(favorite_element);
                 //favorites_menu.append(favorite_element);
 
@@ -113,41 +120,46 @@ function loadFavorites() {
 }
 
 
+// Select a flavor
 function clickFlavor() {
     resetFlavors();
     $(this).addClass('selected');
     currentFlavor = $(this).index();
 }
 
+// Deselect all flavors
 function resetFlavors() {
     $('.flavor').removeClass('selected');
     currentFlavor = -1;
 }
 
-
+// Select a filling
 function clickFilling() {
     resetFillings();
     $(this).addClass('selected');
     currentFilling = $(this).index();
 }
 
+// Deselect all fillings
 function resetFillings() {
     $('.filling').removeClass('selected');
     currentFilling = -1;
 }
 
+// Select an icing
 function clickIcing() {
     resetIcings();
     $(this).addClass('selected');
     currentIcing = $(this).index();
 }
 
+// Deselect all icings
 function resetIcings() {
     $('.icing').removeClass('selected');
     currentIcing = -1;
 }
 
-
+// Select a topping
 function clickTopping() {
 
     var topping_id = $(this).attr( "id" );
@@ -167,11 +179,14 @@ function clickTopping() {
     
     //console.log(currentToppings);
 }
+
+// Deselect all toppings
 function resetToppings() {
     $("input[name='toppings']").prop('checked', false);
     currentToppings = [];
 }
 
+// Reset all cupcake defaults
 function resetCupcake(e) {
     resetFlavors();
     resetFillings();
@@ -183,8 +198,12 @@ function resetCupcake(e) {
     }
 }
 
+// Load a favorite cupcake into the editor from the favorites menu
 function loadFromFavorites() {
-    var index = $(this).index();
+    
+    // Label counts as in item in the index
+    var index = $(this).index() - 1;
+    console.log(index);
 
     var cupcake_data = favorites_data[index]['cupcake'];
 
@@ -253,26 +272,82 @@ function loadFromFavorites() {
     //console.log('Load from favorites:' + index);
 }
 
-function addToFavorites() {
+function  openFavoriteDialog() {
 
+    if (currentFlavor > -1 && currentIcing > -1 && currentFilling > -1) {
 
-    // TODO: Show a dialog here?
-    // Make the user input a name for the cupcake design
-    var design_name = 'MY FAVORITE';
+        var design_name = '';
 
+        // Assign the dialog labels
+        $('#flavorLabel')[0].innerHTML = "Flavor: " + flavors[currentFlavor].name;
+        $('#fillingLabel')[0].innerHTML = "Filling: " + fillings[currentFilling].name;
+        $('#icingLabel')[0].innerHTML = "Icing: " + icings[currentIcing].name;
 
-    // INSERT INTO DB VIA REST API!!!
+        var toppingsString = "";
+
+        for (var i = 0; i < currentToppings.length; i++) {
+            for (var j = 0; j < toppings.length; j++) {
+                if (currentToppings[i] == toppings[j].id) {
+
+                    // Create the toppings string
+                    toppingsString += toppings[j].name + ", ";
+                }
+            }
+        }
+
+        // Remove the last comma and space
+        toppingsString = toppingsString.slice(0,-2);
+
+        // Assign the topping dialog label
+        $('#toppingsLabel')[0].innerHTML = "Toppings: " + toppingsString;
+
+        // Create the dialog for input
+        $( "#dialog-modal" ).dialog({
+              autoOpen: true,
+              height: 400,
+              width: 500,
+              modal: true,
+              resizable: false,
+              buttons: {
+                Okay: function() {
+
+                    if ($('#favoriteName').val().length > 0) {
+                        
+                        // Get the favorite name
+                        design_name = $('#favoriteName').val();
+                        
+                        // Close the dialog
+                        $( this ).dialog( "close" );
+                        
+                        // Add the cupcake to favorites
+                        addToFavorites(design_name);
+
+                    } else {
+                        console.log('Error: Favorite name is empty');
+                    }
+                    
+                  },
+                Cancel: function() {
+
+                    // Close the dialog
+                  $( this ).dialog( "close" );
+                }
+              }
+          });
+    }
+}
+
+// Add a cupcake to the favorites menu
+function addToFavorites(design_name) {
+
+    // INSERT INTO DB VIA REST API!
 
     var favorite_menu = $('#favoritesMenu');
 
-    if (currentFlavor > -1 && currentIcing > -1 && currentFilling > -1 && currentToppings.length > 0) {
-        
-        //console.log(currentToppings);
-        //console.log(flavors[currentFlavor].name);
-        //console.log(icings[currentIcing].name);
-        //console.log(fillings[currentFilling].name);
+    if (currentFlavor > -1 && currentIcing > -1 && currentFilling > -1) {
 
-        toppings_array = [];
+        
+       toppings_array = [];
 
         for (var i = 0; i < currentToppings.length; i++) {
             toppings_array.push({ "id": currentToppings[i] });
@@ -280,19 +355,21 @@ function addToFavorites() {
 
         //console.log(toppings_array);
 
-        favorites_data.push(
-        {
+        // Create the favorites data
+        var favorite_data = {
             "name": design_name,
             "cupcake": {
                 "flavor_id": flavors[currentFlavor].id,
                 "icing_id": icings[currentIcing].id,
                 "filling_id": fillings[currentFilling].id,
-                "toppings": toppings_array
+                "toppings": toppings_array,
+                "quantity": 1
             }
-        });
+        };
 
-        // FIX THE TOPPING PROPERTY HERE TO LOAD FROM A NEW FAVORITES!!!!
+        favorites_data.push(favorite_data);
 
+        // Create the element in the DOM
         var favorite_element = $(document.createElement('div'));
         favorite_element.addClass('favoriteItem');
         favorite_element.append("<img src='resources/artwork/cupcake_icon.png' />");
@@ -308,6 +385,25 @@ function addToFavorites() {
         // Add the item into the order
         favorite_menu.append(favorite_element);
 
+        // SEND TO REST API
+        var request = new XMLHttpRequest();
+            request.open("POST", "./api/index.php/users/" + userId + "/favorites");
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+
+                    var response = JSON.parse(request.responseText);
+
+                    if (response['success'] == true) {
+                        //console.log('Successfully added favorites to Database');
+                    } else {
+                        console.log('Error' + request.responseText);
+                    }
+                }
+            }
+
+        request.send(JSON.stringify(favorite_data));
+
     } else {
         console.log('Something is missing from your design');
     }
@@ -315,7 +411,7 @@ function addToFavorites() {
 
 function removeFromOrder() {
     // Remove from internal array of orders
-    var index = $(this).parent().index();
+    var index = $(this).parent().index($('.orderItem'));
 
     //console.log('Order Item Index: ' + index);
 
@@ -324,6 +420,8 @@ function removeFromOrder() {
 
     // Remove from UI
     $(this).parent().remove();
+
+    updateTotalPrice();
 }
 
 function addToOrder() {
@@ -331,7 +429,7 @@ function addToOrder() {
 
     var order_menu = $('#orderMenu');
 
-    if (currentFlavor > -1 && currentIcing > -1 && currentFilling > -1 && currentToppings.length > 0) {
+    if (currentFlavor > -1 && currentIcing > -1 && currentFilling > -1 && currentQuantity > 0) {
         
         //console.log(currentToppings);
         //console.log(flavors[currentFlavor].name);
@@ -344,7 +442,8 @@ function addToOrder() {
             "flavor_id": flavors[currentFlavor].id,
             "icing_id": icings[currentIcing].id,
             "filling_id": fillings[currentFilling].id,
-            "toppings": currentToppings
+            "toppings": currentToppings,
+            "quantity": currentQuantity
         });
 
         var order_element = $(document.createElement('div'));
@@ -352,7 +451,7 @@ function addToOrder() {
         order_element.append("<img src='resources/artwork/cupcake_icon.png' />");
 
         var label = $(document.createElement('label'));
-        label.append(flavors[currentFlavor].name);
+        label.append(flavors[currentFlavor].name + ":  " + currentQuantity);
 
         order_element.append(label);
 
@@ -375,15 +474,110 @@ function addToOrder() {
         // Reset the selection so we can create a new cupcake
         resetCupcake(undefined);
 
+        updateTotalPrice();
+
     } else {
         console.log('Something is missing from your order');
     }
     
 }
 
+function updateQuantity() {
+    currentQuantity = $('#cupcakeQuantity')[0].value;
+}
+
+function updateTotalPrice() {
+
+    totalPrice = 0.0;
+
+    for (var i = 0; i < order_data.length; i++) {
+
+        var item = order_data[i];
+
+        var itemPrice = 0.0;
+        var quantity = item.quantity;
+        
+        for(var j = 0; j < flavors.length; j++) {
+            if (flavors[j].id == item.flavor_id)
+            {
+                itemPrice += flavors[j].price;
+            }
+        }
+
+        for(var j = 0; j < fillings.length; j++) {
+            if (fillings[j].id == item.filling_id)
+            {
+                itemPrice += fillings[j].price;
+            }
+        }
+
+        for(var j = 0; j < icings.length; j++) {
+            if (icings[j].id == item.icing_id)
+            {
+                itemPrice += icings[j].price;
+            }
+        }
+
+        for(var j = 0; j < item.toppings.length; j++) {
+
+            var topping = item.toppings[j];
+
+            for(var k = 0; k < toppings.length; k++) {
+                if (toppings[k].id == topping)
+                {
+                    itemPrice += toppings[k].price;
+                }
+            }
+        }
+        
+        totalPrice += (itemPrice * quantity);
+    }
+
+    $('#totalCost')[0].innerHTML = 'Total Cost: $' + totalPrice.toFixed(2);
+    console.log("Total Cost: " + totalPrice.toFixed(2));
+}
+
+function submitOrder() {
+
+    var final_order_data = {
+        "user_id": userId,
+        "total_price": totalPrice,
+        "cupcakes": order_data
+    }
+
+    // SEND TO REST API
+    var request = new XMLHttpRequest();
+        request.open("POST", "./api/index.php/orders");
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.onreadystatechange = function () {
+            if (request.readyState == 4 && request.status == 200) {
+
+                var response = JSON.parse(request.responseText);
+
+                if (response['success'] == true) {
+                    console.log('Successfully added order to Database');
+                    window.location.href = "employee.php";
+                } else {
+                    console.log('Error' + request.responseText);
+                }
+            }
+        }
+
+    request.send(JSON.stringify(final_order_data));
+
+    
+}
 
 
 $(document).ready(function () {
+
+    userId = $('#user-id')[0].innerHTML;
+
+    $('#dialog-modal').submit( function(e) {
+        // Prevent the page from submitting within the dialog
+         e.preventDefault();
+    });
+        
 
     loadCupcakeData();
 
@@ -396,8 +590,13 @@ $(document).ready(function () {
     $('#resetCupcakeButton').click(resetCupcake);
     $('#addCupcakeButton').click(addToOrder);
     $('#resetToppingButton').click(resetToppings);
-    $('#saveFavoriteButton').click(addToFavorites);
-    
+
+    $('#saveFavoriteButton').click(openFavoriteDialog);
+    $('#cupcakeQuantity').change(updateQuantity);
+
+    $('#submitOrder').click(submitOrder);
     $('input[name="toppings"]').change(clickTopping);
+
+    updateTotalPrice();
 
 });

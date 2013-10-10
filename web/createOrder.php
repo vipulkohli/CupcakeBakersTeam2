@@ -36,6 +36,10 @@ if (isset($_POST['logout'])) {
 	exit;
 }
 
+// Create the dynamic base_url for the REST API request
+$prefix = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+$domain = $_SERVER['HTTP_HOST'];
+$base_url = $prefix . $domain . dirname($_SERVER['PHP_SELF']);
 
 ?>
 
@@ -45,9 +49,15 @@ if (isset($_POST['logout'])) {
 <head>
 	<title>Custom Cupcakes | Create Order</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script src="js/orderManager.js" type="text/javascript"></script>
+	<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 </head>
 
 <body>
@@ -65,14 +75,21 @@ if (isset($_POST['logout'])) {
 
 	</header>
 
+	<?php
+
+	echo "<p id='user-id' style='display: none;'>" . $_SESSION['id'] . "</p>";
+
+	?>
+
 	
 	<div id="favoritesMenu">
-		Favorite Designs:
+		<label>Favorite Designs:</label>
 		</div>
 
 		<div id="orderMenu">
-	Order Menu:
+		<label>Order Menu:</label>
 
+		<label id="totalCost">Total Cost: $10.00</label>
 	</div>
 
 	<div id="createOrderContainer">
@@ -88,7 +105,7 @@ if (isset($_POST['logout'])) {
 	// CREATE THE FLAVOR CHOICES USING THE REST API
 
 					$ch = curl_init();
-					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/flavors');
+					curl_setopt($ch, CURLOPT_URL, $base_url . '/api/index.php/flavors');
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 					curl_setopt($ch, CURLOPT_HEADER, FALSE);
 					$response = curl_exec($ch);
@@ -117,7 +134,7 @@ if (isset($_POST['logout'])) {
 	// CREATE THE ICING CHOICES USING THE REST API
 
 					$ch = curl_init();
-					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/icings');
+					curl_setopt($ch, CURLOPT_URL, $base_url . '/api/index.php/icings');
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 					curl_setopt($ch, CURLOPT_HEADER, FALSE);
 					$response = curl_exec($ch);
@@ -146,7 +163,7 @@ if (isset($_POST['logout'])) {
 	// CREATE THE FILLING CHOICES USING THE REST API
 
 					$ch = curl_init();
-					curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/fillings');
+					curl_setopt($ch, CURLOPT_URL, $base_url . '/api/index.php/fillings');
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 					curl_setopt($ch, CURLOPT_HEADER, FALSE);
 					$response = curl_exec($ch);
@@ -173,7 +190,7 @@ if (isset($_POST['logout'])) {
 // CREATE THE TOPPING CHOICES USING THE REST API
 
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/toppings');
+				curl_setopt($ch, CURLOPT_URL, $base_url . '/api/index.php/toppings');
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 				curl_setopt($ch, CURLOPT_HEADER, FALSE);
 				$response = curl_exec($ch);
@@ -199,9 +216,23 @@ if (isset($_POST['logout'])) {
 			<input type="button" id ="addCupcakeButton" value="Add to Order" />
 			<input type="button" id="saveFavoriteButton" value="Add to Favorites" />
 
-			<input type="submit" name="submit" value="Submit Order" />
+			<label for="cupcakeQuantity">Quantity:</label>
+			<input type="number" name="cupcakeQuantity" id="cupcakeQuantity" value="1" min="1" step="1" />
+
+			<input type="button" id="submitOrder" name="submit" value="Submit Order" />
 		</form>
 		
+	</div>
+
+	<div id="dialog-modal" title="Add To Favorites">
+	  <form>
+	    <label for="name">Name</label>
+	    <input type="text" name="favoriteName" id="favoriteName" class="text ui-widget-content ui-corner-all" />
+	    <label id="flavorLabel" class="dialogLabel">Flavor:</label>
+	    <label id="icingLabel" class="dialogLabel">Icing:</label>
+	    <label id="fillingLabel" class="dialogLabel">Filling:</label>
+	    <label id="toppingsLabel" class="dialogLabel">Toppings:</label>
+	  </form>
 	</div>
 
 	<footer>

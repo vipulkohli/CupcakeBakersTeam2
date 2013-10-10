@@ -10,6 +10,8 @@ COLOR PALETTE
 #F5A2A2
 
 */
+
+
 h1,h2,h3,h4,h5,h6 {
 	margin: 0;
 	padding: 0;
@@ -41,13 +43,15 @@ input[type="text"],input[type="password"],input[type="number"],input[type="email
 }
 
 
+/* style the buttons */
 input[type="submit"],input[type="reset"],input[type="button"] {
     height: 2em;
     border-radius: 5px;
     border: 1px solid gray;
 }
 
-input[type="submit"] {
+/* submit buttons on the right */
+input[type="submit"],#submitOrder {
     float: right;
 }
 
@@ -56,20 +60,24 @@ input[type="radio"] {
 }
 
 
+/* Using a google font */
 body {
 	font-family: 'Open Sans', sans-serif;
 	background-color: #FFD8D8;
 }
 
+/* inherit the font on other elements */
 input,select,button {
 	font-family: inherit;
 	font-size:  inherit;
 }
+
 header h1 {
 	/* Show the header in the top left corner */
 	margin: 0;
 	font-size: 70px;
 	float:left;
+	font-family: 'Dancing Script', cursive;
 }
 
 .cc-container {
@@ -275,9 +283,33 @@ height: 1.5em;
 margin-top: .5em
 }
 
+#totalCost {
+	left: 1em;
+	position: fixed;
+	bottom: 5%;
+}
 /* EMPLOYEE ANALYTICS PAGE */
 
 #pieCharts div,#barCharts div {
 	padding-top: 10em;
 	font-family: inherit;
+}
+
+#cupcakeQuantity {
+	width: 2em;
+	display: inline;
+}
+
+#dialog-modal {
+	display: none;
+}
+
+.dialogLabel {
+	display: block;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+#favoriteName {
+	width: 95%;
 }

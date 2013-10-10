@@ -7,6 +7,7 @@
 	<script src="js/knockout-2.2.1.js"></script>
 	<script src="js/globalize.min.js"></script>
 	<script src="js/dx.chartjs.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">	
 
