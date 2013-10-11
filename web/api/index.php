@@ -399,11 +399,12 @@ $app->post(
 
 
             // INSERT THE INTO FAVORITES
-			$sth = $db->prepare('INSERT INTO favorites (user_id,cupcake_id) 
-				VALUES (:user_id,:cupcake_id)');
+			$sth = $db->prepare('INSERT INTO favorites (user_id,cupcake_id,name) 
+				VALUES (:user_id,:cupcake_id,:name)');
 
 			$sth->bindParam(':user_id', $id);
 			$sth->bindParam(':cupcake_id', $cupcake_id);
+			$sth->bindParam(':name', $name);
 			$sth->execute();
 
 			// Get the id of the inserted favorite object
