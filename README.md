@@ -13,4 +13,6 @@ Custom Cupcackes Website Link: http://54.200.111.247/git/cupcakes/web
 
 We have attempted and successfully accomplished the bonus.
 
-<iframe src="http://54.200.111.247/git/cupcakes/web/" height="1000" width = "100%"></iframe>
+<object type="text/html" data="http://54.200.111.247/git/cupcakes/web/index.php" style="width:100%; height:100%">
+<p>backup content</p>
+</object>
