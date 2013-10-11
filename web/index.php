@@ -23,7 +23,8 @@ if (isset($_POST['submit'])) {
 			'email' => $_POST['email'],
 			'password' => $_POST['password']
 			);
-
+		
+		//cURL used to collect login information
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/login');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -34,8 +35,10 @@ if (isset($_POST['submit'])) {
 		$response = curl_exec($ch);
 		curl_close($ch);
 
+		//sent to the be decoded
 		$responseObj = json_decode($response,true);
 
+		//depending on the response we either ask for different credentials or log the user in
 		if($responseObj['success'])
 		{
 			$_SESSION['id'] = $responseObj['user_id'];
@@ -164,7 +167,8 @@ if (isset($_SESSION['id']))
 
 			<div id="login_error" class="error">
 			</div>
-
+			
+			<!-- Login Form in html that sends email and pass to correspdoning php script -->
 			<form id="loginForm" method="POST" action="index.php">
 				<input type="email" name="email" placeholder="Email Address" title="Please enter a valid email" required autocomplete="on" />
 				<input type="password" name="password" placeholder="Password" title="Password must be at least 8 characters" required autocomplete="on" />
@@ -174,6 +178,7 @@ if (isset($_SESSION['id']))
 
 	</header>
 	
+	<!-- content -->
 	<div id="leftHalf">
 			<h2>Great Flavors!</h2>
 			<h2>Awesome Cupcakes!</h2>
@@ -185,14 +190,15 @@ if (isset($_SESSION['id']))
 	<h2>Create a Custom Cupcake Account</h2>
 	
 		<?php
-
+		
 		if(isset($_SESSION['msg']['reg-err']))
 		{
 			echo '<div class="error">'.$_SESSION['msg']['reg-err'].'</div>';
 			unset($_SESSION['msg']['reg-err']);
 		}
 		?> 
-
+		
+		<!-- account creation form -->
 		<div id="register_error" class="error">
 		</div>
 

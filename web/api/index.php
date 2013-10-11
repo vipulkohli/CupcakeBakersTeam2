@@ -29,7 +29,7 @@ $app = new \Slim\Slim();
 $app->add(new \Slim\Middleware\ContentTypes());
 
 
-// Create a hash and a salt for a given password
+// Create a hash and a salt for a given password, usin Blowfish API
 // This is used when creating an account
 function hashPassword($password) {
 	

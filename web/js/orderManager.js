@@ -1,5 +1,6 @@
 
 
+//globals that will be used
 
 var userId = -1;
 
@@ -23,7 +24,7 @@ var selectedOrder = -1;
 
 function loadCupcakeData() {
 
-    // Load Flavors
+    // Load Flavors from JSON using an XMLHttp Request
     var flavorRequest = new XMLHttpRequest();
     flavorRequest.open("GET","./api/index.php/flavors",true);
     flavorRequest.onreadystatechange = function(e) {
@@ -34,7 +35,7 @@ function loadCupcakeData() {
     }
     flavorRequest.send();
 
-    // Load Icings
+    // Load Icings from JSON
     var icingRequest = new XMLHttpRequest();
     icingRequest.open("GET","./api/index.php/icings",true);
     icingRequest.onreadystatechange = function(e) {
@@ -45,7 +46,7 @@ function loadCupcakeData() {
     }
     icingRequest.send();
 
-    // Load Fillings
+    // Load Fillings from JSON
     var fillingRequest = new XMLHttpRequest();
     fillingRequest.open("GET","./api/index.php/fillings",true);
     fillingRequest.onreadystatechange = function(e) {
@@ -56,7 +57,7 @@ function loadCupcakeData() {
     }
     fillingRequest.send();
 
-    // Load Toppings
+    // Load Toppings from JSON
     var toppingRequest = new XMLHttpRequest();
     toppingRequest.open("GET","./api/index.php/toppings",true);
     toppingRequest.onreadystatechange = function(e) {
@@ -118,6 +119,8 @@ function loadFavorites() {
             }
         }
     }
+
+	//send the XMLHttp request 
     request.send();
 }
 

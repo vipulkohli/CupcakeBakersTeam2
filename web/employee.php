@@ -19,7 +19,8 @@
 <header>
 	<h1>Custom Cupcake Analytics</h1>
 </header>
-
+	
+	<!-- Charts API used to create Custom Analytics for the employee -->
 	<div id="pieCharts">
 		<div id="flavorsChart"  style="width: 100%; height: 450px;"></div>
 		<div id="fillingsChart" style="width: 100%; height: 450px;"></div>
