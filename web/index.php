@@ -9,6 +9,11 @@ session_set_cookie_params(2*7*24*60*60);
 // Start the session
 session_start();
 
+// Create the dynamic base_url for the REST API request
+$prefix = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
+$domain = $_SERVER['HTTP_HOST'];
+$base_url = $prefix . $domain . dirname($_SERVER['PHP_SELF']);
+
 
 if (isset($_POST['submit'])) {
 	
@@ -26,7 +31,7 @@ if (isset($_POST['submit'])) {
 		
 		//cURL used to collect login information
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/login');
+		curl_setopt($ch, CURLOPT_URL, $base_url . '/api/index.php/login');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
 		curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -85,7 +90,7 @@ if (isset($_POST['submit'])) {
 
 		// Create the REST API Request
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://localhost/cupcakes/api/index.php/users');
+		curl_setopt($ch, CURLOPT_URL, $base_url . '/api/index.php/users');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
 		curl_setopt($ch, CURLOPT_POST, TRUE);
